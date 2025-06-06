@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accolades - Young Pianist Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        /* Navigation - Same as index.html */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger::before {
+            transform: translateY(-10px);
+        }
+
+        .hamburger::after {
+            transform: translateY(10px);
+        }
+
+        .nav-toggle.active .hamburger {
+            background-color: transparent;
+        }
+
+        .nav-toggle.active .hamburger::before {
+            transform: rotate(45deg);
+        }
+
+        .nav-toggle.active .hamburger::after {
+            transform: rotate(-45deg);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.98);
+            padding-top: 80px;
+            transition: right 0.3s ease-in-out;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Page Specific Styles */
+        .page-content {
+            padding: 120px 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #333;
+        }
+
+        .accolades-container {
+            margin-top: 3rem;
+        }
+
+        .accolade-category {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .accolades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .accolade-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accolade-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ffd700, #ffb347);
+        }
+
+        .accolade-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .accolade-year {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .accolade-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .accolade-description {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .accolade-place {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background-color: #ffd700;
+            color: #333;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-menu {
+                width: 100%;
+            }
+
+            .accolades-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accolade-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button class="nav-toggle">
+            <div class="hamburger"></div>
+        </button>
+        <div class="nav-menu">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="global-experience.html">Global Experience</a>
+                <a href="accolades.html">Accolades</a>
+                <a href="contact.html">Find me</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <h1 class="page-title">Accolades</h1>
+        
+        <div class="accolades-container">
+            <div class="accolade-category">
+                <h2 class="category-title">International Competitions & Performances</h2>
+                <div class="accolades-grid">
+                    <div class="accolade-card">
+                        <div class="accolade-year">2024</div>
+                        <h3 class="accolade-title">10th Bangkok Chopin Piano Competition</h3>
+                        <p class="accolade-description">Winner of the Chopin Atlanta Prize, leading to a full scholarship opportunity to study in Vienna</p>
+                        <span class="accolade-place">Prize Winner</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2024</div>
+                        <h3 class="accolade-title">Elevato Competition</h3>
+                        <p class="accolade-description">Winner with invitation to perform in Tokyo</p>
+                        <span class="accolade-place">First Place</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2023</div>
+                        <h3 class="accolade-title">Euterpe Music Awards, Germany</h3>
+                        <p class="accolade-description">Junior B Category (Born 2007 & 2008)</p>
+                        <span class="accolade-place">Gold Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">2nd Premia International Young Artists Music Festival, Hong Kong</h3>
+                        <p class="accolade-description">Young Artists E Category (13-14y) with invitation to perform in Carnegie Hall</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">New talent Festival, UK</h3>
+                        <p class="accolade-description">Piano Competition Group 14y with invitation to perform in Royal Academy Music. CIS Runner-up Prize with one year full scholarship to Conservatorio della Svizzera Italiana</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">Elevato Piano Competition (Live & Online)</h3>
+                        <p class="accolade-description">Leading to performance opportunities in Tokyo</p>
+                        <span class="accolade-place">Winner</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">Golden Classical Music Awards, USA</h3>
+                        <p class="accolade-description">Intermediate Category (13-15y) with invitation to perform in Carnegie Hall</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">American Virtuoso International Music Competition, USA</h3>
+                        <p class="accolade-description">Young Artist Group B (11-14y) with invitation to perform in Carnegie Hall</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">Beethoven Young Musician Competition</h3>
+                        <p class="accolade-description">Junior Talent Category (2006/2007)</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">IX International Piano Competition Smederevo</h3>
+                        <p class="accolade-description">Born in 2007 and younger category</p>
+                        <span class="accolade-place">Absolute First Prize & Special Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">Chicago International Music Competition and Festival, USA</h3>
+                        <p class="accolade-description">Young Artist I (Professional Group) 13-14y</p>
+                        <span class="accolade-place">Second Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">XII International Online Competition "Winter Stars of Dresden", Germany</h3>
+                        <p class="accolade-description">Junior 1 Category (13-15y) - Perfect Score</p>
+                        <span class="accolade-place">Grand Prize (10/10)</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">King's Peak International Classical Music Competition, UK</h3>
+                        <p class="accolade-description">Category D (14-16y)</p>
+                        <span class="accolade-place">Second Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">Orbetello International Piano Competition, Italy</h3>
+                        <p class="accolade-description">International piano competition in Italy</p>
+                        <span class="accolade-place">Award Winner</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">2nd International Artepiano Competition, UK</h3>
+                        <p class="accolade-description">Category B (13-15y)</p>
+                        <span class="accolade-place">Third Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">IX Stockholm International Music Competition, Sweden</h3>
+                        <p class="accolade-description">Group C (up to 15y)</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">VI Tokyo International Music Competition, Japan</h3>
+                        <p class="accolade-description">Category D (13-14y) with near-perfect score</p>
+                        <span class="accolade-place">First Prize (99/100)</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">1st Carl Bechstein Piano Competition for Young Pianist, Thailand</h3>
+                        <p class="accolade-description">Elite group E2 (14y) and Professional Group (open age)</p>
+                        <span class="accolade-place">First Prize and Winner</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">6th Brilliant Talent Discovery Awards International Music Competition, Singapore</h3>
+                        <p class="accolade-description">Intermediate Category (14-16y)</p>
+                        <span class="accolade-place">Grand Brilliant Award</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">Elevato Stanza Junior Piano Competition, Russia/Poland</h3>
+                        <p class="accolade-description">F Category (Born in 2007/2008) with Best Rachmaninoff and Jury Award</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2022</div>
+                        <h3 class="accolade-title">Golden Piano Talents Competition, North Macedonia</h3>
+                        <p class="accolade-description">3rd Category with Best Tchaikovsky (Born in 2007/2008)</p>
+                        <span class="accolade-place">Grand Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">Piano-Online Competition (2nd Edition), Poland</h3>
+                        <p class="accolade-description">V Category (Born in 2007/2006)</p>
+                        <span class="accolade-place">Second Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">International Clara Schumann Competition, Belgium</h3>
+                        <p class="accolade-description">Junior A Category (Born in 2007/2006)</p>
+                        <span class="accolade-place">Second Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">Trinity International Music Competition, UK</h3>
+                        <p class="accolade-description">Youth Category (12-16y)</p>
+                        <span class="accolade-place">Platinum Award</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">Shanghai Piano Open Competition, China</h3>
+                        <p class="accolade-description">Open Category</p>
+                        <span class="accolade-place">Second Award</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">Aloha International Piano Festival, USA</h3>
+                        <p class="accolade-description">Junior Group (12-14y) with Third Prize & Audience Prize Winner & Scholarship</p>
+                        <span class="accolade-place">Multiple Awards</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">CMTG Young Musician Competition & Festival, Thailand</h3>
+                        <p class="accolade-description">Category I</p>
+                        <span class="accolade-place">First Absolute Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">Kayserburg International Youth Piano Competition-Singapore & Southeast Asia Regional</h3>
+                        <p class="accolade-description">Intermediate Category (13-16y) with Silver Award Winner & Scholarship</p>
+                        <span class="accolade-place">Silver Award</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">North American Virtuoso International Music Competition, Canada</h3>
+                        <p class="accolade-description">Open age category</p>
+                        <span class="accolade-place">Grand Prix Winner & Platinum Medal</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">International Moscow Music Competition, Russia</h3>
+                        <p class="accolade-description">Category (10-13y)</p>
+                        <span class="accolade-place">First Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2021</div>
+                        <h3 class="accolade-title">Singapore International Competition, Singapore</h3>
+                        <p class="accolade-description">Liszt Class (Open age)</p>
+                        <span class="accolade-place">First Prize & Winner</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2020</div>
+                        <h3 class="accolade-title">Quebec Music International Online Competition</h3>
+                        <p class="accolade-description">Junior Category with Special Performance Prize</p>
+                        <span class="accolade-place">1st Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2020</div>
+                        <h3 class="accolade-title">Vladimir Klainey Online Competition, Russia</h3>
+                        <p class="accolade-description">Intermediate Group</p>
+                        <span class="accolade-place">3rd Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2019</div>
+                        <h3 class="accolade-title">Ginastera International Music Festival and Competition, Thailand, Chiangmai</h3>
+                        <p class="accolade-description">Junior B Category with Ginastera Special Prize</p>
+                        <span class="accolade-place">Silver Prize</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2019</div>
+                        <h3 class="accolade-title">IV Geneva International Music Competition / IV Madrid International Music Competition</h3>
+                        <p class="accolade-description">Category B</p>
+                        <span class="accolade-place">First Prize and Highest Score</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2019</div>
+                        <h3 class="accolade-title">The 2nd Hong Kong International Competition for Young Pianists</h3>
+                        <p class="accolade-description">Junior B (12-14Y) and Fourth Prize, Open Class (Under 35Y)</p>
+                        <span class="accolade-place">First Prize & Scholarship</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2018</div>
+                        <h3 class="accolade-title">US 26th Open Music Competition (San Francisco) Final Round</h3>
+                        <p class="accolade-description">Children 10-12Y category</p>
+                        <span class="accolade-place">Grand Prize & Scholarship</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2023</div>
+                        <h3 class="accolade-title">Nord Anglia Global Campus Virtual Young Musician</h3>
+                        <p class="accolade-description">Classical Piano Category</p>
+                        <span class="accolade-place">Second Place</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accolade-category">
+                <h2 class="category-title">Academic Excellence</h2>
+                <div class="accolades-grid">
+                    <div class="accolade-card">
+                        <div class="accolade-year">2023</div>
+                        <h3 class="accolade-title">IGCSE Results</h3>
+                        <p class="accolade-description">Achieved 10 A*/9s - Highest number at Regents, including top marks in Geography, Additional Mathematics, English Literature, and English Language</p>
+                        <span class="accolade-place">Perfect Score</span>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2024</div>
+                        <h3 class="accolade-title">IB Predicted Grades</h3>
+                        <p class="accolade-description">Exceptional academic performance in the International Baccalaureate program</p>
+                        <span class="accolade-place">41/42 Points</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accolade-category">
+                <h2 class="category-title">Professional Achievements</h2>
+                <div class="accolades-grid">
+                    <div class="accolade-card">
+                        <div class="accolade-year">2024</div>
+                        <h3 class="accolade-title">Steinway & Sons Bangkok Collaboration</h3>
+                        <p class="accolade-description">Multiple performances at Steinway Gallery</p>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2024</div>
+                        <h3 class="accolade-title">Apple Artist Achievement</h3>
+                        <p class="accolade-description">Collaboration with Karma Sound Studio, reaching over 8 million streams across 100+ platforms</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accolade-category">
+                <h2 class="category-title">Leadership & Service</h2>
+                <div class="accolades-grid">
+                    <div class="accolade-card">
+                        <div class="accolade-year">2023</div>
+                        <h3 class="accolade-title">Head of Music - Student Takeover Day</h3>
+                        <p class="accolade-description">Led music education for Year 6 and Year 9 students</p>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2023</div>
+                        <h3 class="accolade-title">CCA Leadership</h3>
+                        <p class="accolade-description">Running Additional Mathematics and Music CCAs, mentoring KS3 and KS4 students</p>
+                    </div>
+
+                    <div class="accolade-card">
+                        <div class="accolade-year">2023</div>
+                        <h3 class="accolade-title">MUN Conference</h3>
+                        <p class="accolade-description">Head of Marketing for school's Model United Nations conference</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-toggle').classList.remove('active');
+                document.querySelector('.nav-menu').classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navMenu = document.querySelector('.nav-menu');
+            const navToggle = document.querySelector('.nav-toggle');
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html> 

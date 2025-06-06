@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuqiao Chen - Young Pianist & Musician</title>
+    <link href="https://fonts.googleapis.com/css2?family=Brandon+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Belinda&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Brandon Grotesque', 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger {
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            position: relative;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger::before {
+            transform: translateY(-10px);
+        }
+
+        .hamburger::after {
+            transform: translateY(10px);
+        }
+
+        .nav-toggle.active .hamburger {
+            background-color: transparent;
+        }
+
+        .nav-toggle.active .hamburger::before {
+            transform: rotate(45deg);
+        }
+
+        .nav-toggle.active .hamburger::after {
+            transform: rotate(-45deg);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            padding-top: 80px;
+            transition: right 0.3s ease-in-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #d4af37;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Main Content */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('635be9f3760ed2dd92f14f2a187685a6.jpg');
+            background-size: contain;
+            background-position: center center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 0 1rem;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            padding: 2.5rem;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 1s ease-out;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        .hero-name {
+            font-family: 'Belinda', cursive;
+            font-size: 4rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: #c9a96e;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-family: 'Brandon Grotesque', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #f0f0f0;
+            font-weight: 500;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        .hero-description {
+            font-family: 'Brandon Grotesque', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            color: #e8e8e8;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll; /* Fixed attachment can cause issues on mobile */
+                background-position: center center;
+                background-size: contain;
+            }
+
+            .hero-name {
+                font-size: 2.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+                letter-spacing: 1px;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .nav-menu {
+                width: 100%;
+            }
+
+            .hero-content {
+                padding: 2rem;
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                background-attachment: scroll;
+                background-position: center center;
+                background-size: contain;
+            }
+
+            .hero-name {
+                font-size: 2.2rem;
+            }
+
+            .hero-content {
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .hero-description {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 320px) {
+            .hero-name {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-content {
+                padding: 1.2rem;
+                width: 98%;
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                background-attachment: scroll;
+            }
+
+            .hero-content {
+                padding: 1.5rem;
+                max-width: 90%;
+            }
+
+            .hero-name {
+                font-size: 2rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-description {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button class="nav-toggle">
+            <div class="hamburger"></div>
+        </button>
+        <div class="nav-menu">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="global-experience.html">Global Experience</a>
+                <a href="accolades.html">Accolades</a>
+                <a href="contact.html">Find me</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-name">YUQIAO CHEN</h1>
+            <p class="hero-subtitle">Pianist • Scholar • Artist</p>
+            <p class="hero-description">From global stages to quiet practice rooms, I turn life's constant change into music that speaks.</p>
+        </div>
+    </section>
+
+    <script>
+        document.querySelector('.nav-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-toggle').classList.remove('active');
+                document.querySelector('.nav-menu').classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navMenu = document.querySelector('.nav-menu');
+            const navToggle = document.querySelector('.nav-toggle');
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
+
