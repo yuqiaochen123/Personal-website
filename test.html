@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VexFlow Minimal Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/vexflow@1.2.93/build/vexflow-min.js"></script>
+</head>
+<body>
+  <canvas id="vf" width="600" height="200" style="border:1px solid #000"></canvas>
+  <script>
+    if (typeof Vex === 'undefined' || typeof Vex.Flow === 'undefined') {
+      document.body.innerHTML += '<div style="color:red;">VexFlow did not load!</div>';
+    } else {
+      const VF = Vex.Flow;
+      const renderer = new VF.Renderer(document.getElementById("vf"), VF.Renderer.Backends.CANVAS);
+      renderer.resize(600, 200);
+      const context = renderer.getContext();
+      const stave = new VF.Stave(10, 40, 500);
+      stave.addClef("treble").addTimeSignature("4/4");
+      stave.setContext(context).draw();
+    }
+  </script>
+</body>
+</html>
