@@ -395,9 +395,12 @@
                 <p class="hero-subtitle">A Journey Through Music</p>
                 <a href="global-experience.html" class="cta-button">Explore My Journey</a>
             </div>
-    </section>
+        </section>
     </main>
 
+    <footer style="width:100%; text-align:center; margin-top:2rem; padding:1.5rem 0 1rem 0; color:#888; font-family:'Montserrat',sans-serif; font-size:1rem;">
+        Last updated: <span id="last-updated"></span>
+    </footer>
     <script>
         document.querySelector('.nav-toggle').addEventListener('click', function() {
             this.classList.toggle('active');
@@ -420,6 +423,11 @@
                 navToggle.classList.remove('active');
                 navMenu.classList.remove('active');
             }
+        });
+
+        // Set the last updated date dynamically
+        document.getElementById('last-updated').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric'
         });
     </script>
 </body>
