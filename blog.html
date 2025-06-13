@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Young Pianist Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Brandon+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Belinda&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .blog-title {
+            font-family: 'Belinda', cursive;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .blog-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-date {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .blog-excerpt {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--primary-hover);
+        }
+
+        .blog-categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-tag {
+            padding: 0.5rem 1rem;
+            background-color: rgba(201, 169, 110, 0.2);
+            color: var(--primary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+        }
+
+        .category-tag:hover,
+        .category-tag.active {
+            background-color: var(--primary-color);
+            color: var(--background-dark);
+        }
+
+        @media (max-width: 768px) {
+            .blog-title {
+                font-size: 2.2rem;
+            }
+
+            .blog-subtitle {
+                font-size: 1rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon">🌙</span>
+    </button>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+        ↑
+    </button>
+
+    <!-- Piano Navigation -->
+    <nav class="piano-navbar">
+        <div class="piano-keys">
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="index.html" class="white-key">Home</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="global-experience.html" class="white-key">Global</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="accolades.html" class="white-key">Accolades</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="contact.html" class="white-key">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <div class="blog-container page-transition">
+            <header class="blog-header">
+                <h1 class="blog-title">Musical Journey</h1>
+                <p class="blog-subtitle">Insights, experiences, and reflections on my musical path</p>
+            </header>
+
+            <div class="blog-categories">
+                <button class="category-tag active">All</button>
+                <button class="category-tag">Performances</button>
+                <button class="category-tag">Practice Tips</button>
+                <button class="category-tag">Competitions</button>
+                <button class="category-tag">Life as a Musician</button>
+            </div>
+
+            <div class="blog-grid">
+                <!-- Blog Post 1 -->
+                <article class="blog-card">
+                    <img src="blog-1.jpg" alt="Piano practice session" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-date">March 15, 2024</div>
+                        <h2 class="blog-card-title">The Art of Daily Practice</h2>
+                        <p class="blog-excerpt">Discover effective practice techniques that have helped me maintain consistency and improve my playing...</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="blog-card">
+                    <img src="blog-2.jpg" alt="Competition preparation" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-date">March 10, 2024</div>
+                        <h2 class="blog-card-title">Preparing for International Competitions</h2>
+                        <p class="blog-excerpt">A behind-the-scenes look at how I prepare for major piano competitions and handle performance pressure...</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-card">
+                    <img src="blog-3.jpg" alt="Masterclass experience" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-date">March 5, 2024</div>
+                        <h2 class="blog-card-title">Learning from Master Classes</h2>
+                        <p class="blog-excerpt">Reflections on the valuable lessons learned from participating in master classes with renowned pianists...</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Blog category filtering
+        const categoryTags = document.querySelectorAll('.category-tag');
+        categoryTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                categoryTags.forEach(t => t.classList.remove('active'));
+                tag.classList.add('active');
+                // Add filtering logic here
+            });
+        });
+    </script>
+</body>
+</html> 

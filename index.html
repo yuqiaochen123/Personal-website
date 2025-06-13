@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuqiao Chen - Young Pianist & Musician</title>
+    <title>Young Pianist Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Brandon+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Belinda&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * {
             margin: 0;
@@ -14,12 +15,31 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            background: #fff;
+            color: #222;
+        }
+
+        html[data-theme="dark"] {
+            --background-dark: #000;
+            --text-light: #fff;
+            --primary-color: #c9a96e;
+            --primary-hover: #e6c88e;
+        }
+        html[data-theme="light"] {
+            --background-dark: #fff;
+            --text-light: #222;
+            --primary-color: #c9a96e;
+            --primary-hover: #e6c88e;
+        }
         body {
             font-family: 'Brandon Grotesque', 'Arial', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
             height: 100vh;
             overflow: hidden;
+            background: var(--background-dark);
+            color: var(--text-light);
         }
 
         /* Navigation */
@@ -132,72 +152,86 @@
         }
 
         /* Main Content */
-        .hero {
+        .hero-section {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('635be9f3760ed2dd92f14f2a187685a6.jpg');
-            background-size: cover;
-            background-position: center top;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             text-align: center;
-            padding: 0 1rem;
             position: relative;
-            min-height: 100vh;
-            background-color: #000;
+            overflow: hidden;
         }
 
         .hero-content {
-            max-width: 700px;
-            padding: 2.5rem;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeInUp 1s ease-out;
-            width: 90%;
-            max-width: 700px;
+            z-index: 2;
+            padding: 2rem;
         }
 
-        .hero-name {
+        .hero-title {
             font-family: 'Belinda', cursive;
             font-size: 4rem;
-            font-weight: 400;
-            margin-bottom: 0.5rem;
-            color: #c9a96e;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-out;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards;
         }
 
         .hero-subtitle {
-            font-family: 'Brandon Grotesque', sans-serif;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            color: #f0f0f0;
-            font-weight: 500;
-            letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
             opacity: 0;
-            animation: fadeIn 1s ease-out 0.5s forwards;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.3s;
         }
 
-        .hero-description {
-            font-family: 'Brandon Grotesque', sans-serif;
-            font-size: 1.2rem;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            color: #e8e8e8;
-            font-weight: 400;
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--background-dark);
+            text-decoration: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: all var(--transition-speed);
             opacity: 0;
-            animation: fadeIn 1s ease-out 1s forwards;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards 0.6s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 10%;
+            z-index: 0;
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -205,108 +239,20 @@
             }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .hero {
-                background-attachment: scroll; /* Fixed attachment can cause issues on mobile */
-                background-position: center 30%;
-                background-size: cover;
-            }
-
-            .hero-name {
-                font-size: 2.8rem;
+            .hero-title {
+                font-size: 2.5rem;
             }
 
             .hero-subtitle {
-                font-size: 1.1rem;
-                letter-spacing: 1px;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .nav-menu {
-                width: 100%;
-            }
-
-            .hero-content {
-                padding: 2rem;
-                width: 95%;
+                font-size: 1.2rem;
             }
         }
 
-        @media (max-width: 480px) {
-            .hero {
-                background-attachment: scroll;
-                background-position: center 30%;
-                background-size: cover;
-            }
-
-            .hero-name {
-                font-size: 2.2rem;
-            }
-
-            .hero-content {
-                padding: 1.5rem;
-                width: 95%;
-            }
-
-            .hero-description {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-        }
-
-        /* Very small screens */
-        @media (max-width: 320px) {
-            .hero-name {
-                font-size: 1.8rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .hero-content {
-                padding: 1.2rem;
-                width: 98%;
-            }
-        }
-
-        /* Landscape orientation on mobile */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .hero {
-                background-attachment: scroll;
-            }
-
-            .hero-content {
-                padding: 1.5rem;
-                max-width: 90%;
-            }
-
-            .hero-name {
-                font-size: 2rem;
-                margin-bottom: 0.3rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-                margin-bottom: 1rem;
-            }
-
-            .hero-description {
-                font-size: 0.9rem;
-                margin-bottom: 1rem;
+        @media (max-width: 600px) {
+            .hero-image {
+                object-position: center 0%;
             }
         }
 
@@ -355,7 +301,7 @@
             color: #222;
             outline: none;
             box-shadow: 0 6px 18px rgba(0,0,0,0.13);
-        }
+            }
         .white-key.selected,
         .white-key:active,
         .white-key:focus {
@@ -388,6 +334,20 @@
     </style>
 </head>
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+        ↑
+    </button>
+
+    <!-- Piano Navigation -->
     <nav class="piano-navbar">
         <div class="piano-keys">
             <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
@@ -400,6 +360,10 @@
             </div>
             <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                 <a href="accolades.html" class="white-key">Accolades</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="media-blog.html" class="white-key">Media</a>
                 <div class="black-key"></div>
             </div>
             <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
@@ -422,13 +386,17 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-name">YUQIAO CHEN</h1>
-            <p class="hero-subtitle">Pianist • Scholar • Artist</p>
-            <p class="hero-description">From global stages to quiet practice rooms, I turn life's constant change into music that speaks.</p>
-        </div>
+    <main id="main-content">
+        <section class="hero-section">
+            <img src="635be9f3760ed2dd92f14f2a187685a6.jpg" alt="Piano performance" class="hero-image">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Yuqiao Chen</h1>
+                <p class="hero-subtitle">A Journey Through Music</p>
+                <a href="global-experience.html" class="cta-button">Explore My Journey</a>
+            </div>
     </section>
+    </main>
 
     <script>
         document.querySelector('.nav-toggle').addEventListener('click', function() {

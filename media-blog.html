@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media & Blog - Young Pianist Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Brandon+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Belinda&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Brandon Grotesque', 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-color: #fff;
+            color: #222;
+        }
+        .media-blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 2rem 3rem 2rem;
+        }
+        .media-blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .media-blog-title {
+            font-family: 'Belinda', cursive;
+            font-size: 3rem;
+            color: #c9a96e;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+        .media-blog-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #c9a96e;
+        }
+        .media-blog-tabs {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .media-blog-tab {
+            padding: 0.5rem 1.5rem;
+            background-color: #f5e9d6;
+            color: #c9a96e;
+            border-radius: 20px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+        .media-blog-tab.active {
+            background-color: #c9a96e;
+            color: #fff;
+        }
+        .media-section {
+            display: none;
+            margin-bottom: 3rem;
+        }
+        .media-section.active {
+            display: block;
+        }
+        .placeholder {
+            background: #ececec;
+            border-radius: 10px;
+            padding: 3rem 1rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+        /* Piano Keyboard Navigation */
+        .piano-navbar {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: transparent;
+            z-index: 1000;
+        }
+        .piano-keys {
+            display: flex;
+            position: relative;
+            height: 90px;
+            gap: 0;
+        }
+        .white-key {
+            width: 140px;
+            height: 90px;
+            background: linear-gradient(to bottom, #fff 80%, #ececec 100%);
+            border: 1.5px solid #bbb;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-family: 'Montserrat', 'Brandon Grotesque', Arial, sans-serif;
+            font-size: 1.15rem;
+            color: #222;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .white-key:hover, .white-key:focus {
+            background: linear-gradient(to bottom, #f7e9b0 80%, #ececec 100%);
+            color: #222;
+            outline: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+        }
+        .white-key.selected,
+        .white-key:active,
+        .white-key:focus {
+            background: linear-gradient(to bottom, #f5e9d6 80%, #ececec 100%);
+            color: #222;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+        }
+        .black-key {
+            width: 36px;
+            height: 55px;
+            background: linear-gradient(to bottom, #222 80%, #444 100%);
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-radius: 0 0 7px 7px;
+            left: 100%;
+            transform: translateX(-50%);
+            margin-left: 0;
+            border: 1.5px solid #222;
+            border-bottom: 4px solid #444;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .piano-navbar, .piano-keys { height: 50px; }
+            .white-key { width: 80px; height: 50px; font-size: 0.8rem; }
+            .black-key { width: 18px; height: 28px; margin-left: 0; }
+        }
+        .media-blog-tab, .placeholder {
+            color: #222 !important;
+        }
+        .timeline-bar {
+            position: fixed;
+            top: 120px;
+            left: 10vw;
+            width: 4px;
+            height: 60vh;
+            background: linear-gradient(to bottom, #c9a96e 0%, #e6c88e 100%);
+            border-radius: 2px;
+            z-index: 10;
+            transition: box-shadow 0.3s;
+            box-shadow: 0 2px 12px rgba(201,169,110,0.12);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeInTimeline 1s ease;
+        }
+        .timeline-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: #c9a96e;
+            margin-bottom: 8px;
+            margin-top: 8px;
+            text-align: right;
+            width: 70px;
+            position: relative;
+            right: 30px;
+            opacity: 0;
+            animation: fadeInLabel 1s ease forwards;
+        }
+        @keyframes fadeInLabel {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInTimeline {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .timeline-dot {
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border: 4px solid #c9a96e;
+            border-radius: 50%;
+            margin: 0 0 0 -7px;
+            box-shadow: 0 2px 8px rgba(201,169,110,0.18);
+            transition: background 0.3s, border 0.3s, transform 0.3s;
+            animation: popInDot 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes popInDot {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @media (max-width: 900px) {
+            .timeline-bar { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="piano-navbar">
+        <div class="piano-keys">
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="index.html" class="white-key">Home</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="global-experience.html" class="white-key">Global</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="accolades.html" class="white-key">Accolades</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="media-blog.html" class="white-key">Media</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="contact.html" class="white-key">Contact</a>
+            </div>
+        </div>
+    </nav>
+    <div class="media-blog-container page-transition">
+        <header class="media-blog-header">
+            <h1 class="media-blog-title">Media</h1>
+        </header>
+        <div class="media-blog-tabs">
+            <button class="media-blog-tab active" data-tab="photos">Photos</button>
+            <button class="media-blog-tab" data-tab="videos">Performance Videos</button>
+            <button class="media-blog-tab" data-tab="compositions">Compositions</button>
+        </div>
+        <div class="media-section active" id="photos">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px;">
+                    <img src="A82FEDC5-C706-4DCD-BE98-6DE07FFCA7B5-a34965c8-b101-493c-b0f1-b04326fae3ab.jpg" alt="Young pianist with audience member" style="width:100%; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #888; margin-top: 0.5rem; text-align: center;">Solo recital at Karma Sound Studio with my producer Chris Craker.</div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px;">
+                    <img src="39C00605-CE32-47D1-A0B3-66943CDB0D8A_1_105_c-72b30bd0-f807-4e6a-8fc0-0da860eaa165.jpg" alt="Steinway & Sons Thailand" style="width:100%; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #888; margin-top: 0.5rem; text-align: center;">With my teacher after a joint concert.</div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px;">
+                    <img src="D6CE1FE0-8E01-40C8-917F-22D4A8AB4872_1_105_c-fced7126-49d2-40e1-b63c-47823a7d9dc7.jpg" alt="Orchestra performance" style="width:100%; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #888; margin-top: 0.5rem; text-align: center;">After performing with the Thai Symphony Orchestra, presented flowers by renowned Thai pianist Sugree Charoensook.</div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px;">
+                    <img src="14AFEB8C-E4FA-4C7C-ADC0-47F193F55422_1_105_c-c494cf65-eb94-4020-a068-173f578eba9e.jpg" alt="French Touch concert" style="width:100%; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #888; margin-top: 0.5rem; text-align: center;">After a joint concert at Steinway Gallery, Bangkok, 2024.</div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; max-width: 320px;">
+                    <img src="8ACE077D-95F2-4905-B20B-69C53D9FE2EC_1_105_c-c8770bce-a96a-4973-9988-27eb4de94210.jpg" alt="Piano performance with bouquet" style="width:100%; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 1rem; color: #888; margin-top: 0.5rem; text-align: center;">At age 11, performing for elderlies in a nursing home in America—a meaningful and memorable experience.</div>
+                </div>
+            </div>
+        </div>
+        <div class="media-section" id="videos">
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; color: #c9a96e;">Kharkiv Meets Zurich competition</div>
+                    <iframe width="360" height="215" src="https://www.youtube.com/embed/knxHgDFj96A" title="Performance Video 1" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; color: #c9a96e;">III International Chopin Piano Competition</div>
+                    <iframe width="360" height="215" src="https://www.youtube.com/embed/w6NRlzL9GR4" title="Performance Video 2" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; color: #c9a96e;">Etude No 3: after Paganini-Liszt, Hamelin</div>
+                    <iframe width="360" height="215" src="https://www.youtube.com/embed/uy8Omhye9SQ" title="Performance Video 3" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="media-section" id="compositions">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+                <h2 style="font-family: 'Montserrat', sans-serif; color: #c9a96e; margin-bottom: 0.5rem;">Demain dès l'aube</h2>
+                <div style="font-family: 'Montserrat', sans-serif; color: #444; font-size: 1.1rem; text-align: center; max-width: 600px; margin-bottom: 1.5rem;">
+                    Original composition by Yuqiao Chen, after Victor Hugo's poem <em>Demain dès l'aube</em>.
+                </div>
+                <a href="demain-des-laubes-yuqiao-chen.pdf" download style="font-family: 'Montserrat', sans-serif; color: #fff; background: #c9a96e; padding: 0.7rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 1rem;">Download PDF</a>
+                <iframe src="demain-des-laubes-yuqiao-chen.pdf" style="width:100%; max-width:600px; height:800px; border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);"></iframe>
+                <hr style="width: 60%; margin: 2.5rem 0; border: none; border-top: 1.5px solid #e6c88e;">
+                <h2 style="font-family: 'Montserrat', sans-serif; color: #c9a96e; margin-bottom: 0.5rem;">Waltz in G minor</h2>
+                <div style="font-family: 'Montserrat', sans-serif; color: #444; font-size: 1.1rem; text-align: center; max-width: 600px; margin-bottom: 1.5rem;">
+                    Original composition by Yuqiao Chen.
+                </div>
+                <a href="waltz-in-g-minor-yuqiao-chen.pdf" download style="font-family: 'Montserrat', sans-serif; color: #fff; background: #c9a96e; padding: 0.7rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 1rem;">Download PDF</a>
+                <iframe src="waltz-in-g-minor-yuqiao-chen.pdf" style="width:100%; max-width:600px; height:800px; border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);"></iframe>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Tab switching logic
+        const tabs = document.querySelectorAll('.media-blog-tab');
+        const sections = document.querySelectorAll('.media-section');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html> 

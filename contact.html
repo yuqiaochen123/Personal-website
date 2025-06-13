@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Young Pianist Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Brandon+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Belinda&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -13,132 +16,106 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Brandon Grotesque', 'Arial', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
-            background-color: #f8f9fa;
+            background-color: #fff;
+            color: #222;
         }
 
-        /* Navigation - Same as index.html */
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 1rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+        html, body {
+            background: #fff;
+            color: #222;
+        }
+
+        body, .page-content, .contact-heading, .contact-text, .form-label, .form-input, .form-textarea, .submit-btn, .category-title, .accolade-title, .accolade-description, .accolade-year, .accolade-place {
+            color: #222 !important;
+        }
+
+        /* Piano Keyboard Navigation */
+        .piano-navbar {
             display: flex;
-            justify-content: flex-end;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .nav-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1001;
-        }
-
-        .hamburger {
-            width: 30px;
-            height: 3px;
-            background-color: #333;
-            position: relative;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .hamburger::before,
-        .hamburger::after {
-            content: '';
-            position: absolute;
-            width: 30px;
-            height: 3px;
-            background-color: #333;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .hamburger::before {
-            transform: translateY(-10px);
-        }
-
-        .hamburger::after {
-            transform: translateY(10px);
-        }
-
-        .nav-toggle.active .hamburger {
-            background-color: transparent;
-        }
-
-        .nav-toggle.active .hamburger::before {
-            transform: rotate(45deg);
-        }
-
-        .nav-toggle.active .hamburger::after {
-            transform: rotate(-45deg);
-        }
-
-        .nav-menu {
+            justify-content: center;
+            align-items: flex-end;
             position: fixed;
             top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100vh;
-            background-color: rgba(255, 255, 255, 0.98);
-            padding-top: 80px;
-            transition: right 0.3s ease-in-out;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-        }
-
-        .nav-menu.active {
-            right: 0;
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: #333;
-            text-decoration: none;
-            font-size: 1.2rem;
-            padding: 0.5rem 1rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background-color: #333;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
             left: 0;
+            width: 100%;
+            height: 90px;
+            background: transparent;
+            z-index: 1000;
+        }
+        .piano-keys {
+            display: flex;
+            position: relative;
+            height: 90px;
+            gap: 0;
+        }
+        .white-key {
+            width: 140px;
+            height: 90px;
+            background: linear-gradient(to bottom, #fff 80%, #ececec 100%);
+            border: 1.5px solid #bbb;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-family: 'Montserrat', 'Brandon Grotesque', Arial, sans-serif;
+            font-size: 1.15rem;
+            color: #222;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .white-key:hover, .white-key:focus {
+            background: linear-gradient(to bottom, #f7e9b0 80%, #ececec 100%);
+            color: #222;
+            outline: none;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+        }
+        .white-key.selected,
+        .white-key:active,
+        .white-key:focus {
+            background: linear-gradient(to bottom, #f5e9d6 80%, #ececec 100%);
+            color: #222;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+        }
+        .black-key {
+            width: 36px;
+            height: 55px;
+            background: linear-gradient(to bottom, #222 80%, #444 100%);
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-radius: 0 0 7px 7px;
+            left: 100%;
+            transform: translateX(-50%);
+            margin-left: 0;
+            border: 1.5px solid #222;
+            border-bottom: 4px solid #444;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
         }
 
         /* Page Specific Styles */
         .page-content {
-            padding: 120px 2rem 2rem;
+            padding: 120px 2rem 3rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .page-title {
-            font-size: 2.5rem;
+            font-family: 'Belinda', cursive;
+            font-size: 3rem;
             text-align: center;
             margin-bottom: 2rem;
-            color: #333;
+            color: #c9a96e;
             position: relative;
         }
 
@@ -150,7 +127,7 @@
             transform: translateX(-50%);
             width: 50px;
             height: 3px;
-            background-color: #333;
+            background-color: #c9a96e;
         }
 
         .contact-container {
@@ -165,13 +142,14 @@
         }
 
         .contact-heading {
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.8rem;
-            color: #333;
+            color: #c9a96e;
             margin-bottom: 1.5rem;
         }
 
         .contact-text {
-            color: #555;
+            color: #222;
             margin-bottom: 2rem;
             font-size: 1.1rem;
         }
@@ -183,7 +161,7 @@
         }
 
         .social-link {
-            color: #333;
+            color: #c9a96e;
             font-size: 1.5rem;
             transition: color 0.3s ease;
             text-decoration: none;
@@ -193,14 +171,16 @@
         }
 
         .social-link:hover {
-            color: #007bff;
+            color: #e6c88e;
         }
 
         .contact-form {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.1);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .form-group {
@@ -209,7 +189,7 @@
 
         .form-label {
             display: block;
-            color: #333;
+            color: #c9a96e;
             margin-bottom: 0.5rem;
             font-weight: bold;
         }
@@ -218,16 +198,18 @@
         .form-textarea {
             width: 100%;
             padding: 0.8rem;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(201, 169, 110, 0.3);
             border-radius: 5px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
         }
 
         .form-input:focus,
         .form-textarea:focus {
             outline: none;
-            border-color: #007bff;
+            border-color: #c9a96e;
         }
 
         .form-textarea {
@@ -236,26 +218,32 @@
         }
 
         .submit-btn {
-            background-color: #007bff;
-            color: white;
+            background-color: #c9a96e;
+            color: #000;
             padding: 1rem 2rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
             transition: background-color 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
         }
 
         .submit-btn:hover {
-            background-color: #0056b3;
+            background-color: #e6c88e;
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-menu {
-                width: 100%;
+        /* Responsive */
+        @media (max-width: 600px) {
+            .piano-navbar, .piano-keys { height: 50px; }
+            .white-key { width: 80px; height: 50px; font-size: 0.8rem; }
+            .black-key { width: 18px; height: 28px; margin-left: 0; }
+            
+            .page-title {
+                font-size: 2.2rem;
             }
-
+            
             .contact-container {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -272,36 +260,42 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <button class="nav-toggle">
-            <div class="hamburger"></div>
-        </button>
-        <div class="nav-menu">
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="global-experience.html">Global Experience</a>
-                <a href="accolades.html">Accolades</a>
-                <a href="contact.html">Find me</a>
+    <nav class="piano-navbar">
+        <div class="piano-keys">
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="index.html" class="white-key">Home</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="global-experience.html" class="white-key">Global</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="accolades.html" class="white-key">Accolades</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="media-blog.html" class="white-key">Media</a>
+                <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="contact.html" class="white-key">Contact</a>
             </div>
         </div>
     </nav>
 
-    <div class="page-content">
-        <h1 class="page-title">Contact Me</h1>
+    <div class="page-content page-transition">
+        <h1 class="page-title">Contact</h1>
         
         <div class="contact-container">
             <div class="contact-info">
                 <h2 class="contact-heading">Let's Connect</h2>
-                <p class="contact-text">I'm always interested in connecting with fellow musicians, music enthusiasts, and potential collaborators. Feel free to reach out!</p>
+                <p class="contact-text">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
                 
-                <h3 class="contact-heading">Follow Me</h3>
                 <div class="social-links">
-                    <a href="https://instagram.com/sequoia_petrichor" target="_blank" class="social-link" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@zhougeng3419" target="_blank" class="social-link" title="YouTube" onclick="window.open('https://www.youtube.com/@zhougeng3419', '_blank')">
-                        <i class="fab fa-youtube"></i>
-                    </a>
+                    <a href="https://instagram.com/sequoia_petrichor" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@zhougeng3419" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://music.apple.com/th/artist/yuqiao/1684786969" class="social-link" target="_blank"><i class="fa fa-music"></i></a>
                 </div>
             </div>
 
@@ -332,38 +326,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.querySelector('.nav-toggle').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.querySelector('.nav-menu').classList.toggle('active');
-        });
-
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.querySelector('.nav-toggle').classList.remove('active');
-                document.querySelector('.nav-menu').classList.remove('active');
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const navMenu = document.querySelector('.nav-menu');
-            const navToggle = document.querySelector('.nav-toggle');
-            if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Handle form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Add your form submission logic here
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
-        });
-    </script>
 </body>
 </html> 
