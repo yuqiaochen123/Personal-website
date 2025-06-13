@@ -8,6 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Belinda&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+      (function() {
+        emailjs.init("_q0ZQ9cWUZvIGCroz");
+      })();
+    </script>
+    <script src="script.js"></script>
     <style>
         * {
             margin: 0;
@@ -300,29 +307,32 @@
             </div>
 
             <div class="contact-form">
-                <form id="contactForm">
+                <form id="contactForm" onsubmit="return sendEmail(event)">
                     <div class="form-group">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" id="name" class="form-input" required>
+                        <input type="text" id="name" name="name" class="form-input" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-input" required>
+                        <input type="email" id="email" name="email" class="form-input" required>
                     </div>
 
                     <div class="form-group">
                         <label for="subject" class="form-label">Subject</label>
-                        <input type="text" id="subject" class="form-input" required>
+                        <input type="text" id="subject" name="subject" class="form-input" required>
                     </div>
 
                     <div class="form-group">
                         <label for="message" class="form-label">Message</label>
-                        <textarea id="message" class="form-textarea" required></textarea>
+                        <textarea id="message" name="message" class="form-textarea" required></textarea>
                     </div>
+
+                    <input type="hidden" name="to_email" value="yuqiaozhou07@gmail.com">
 
                     <button type="submit" class="submit-btn">Send Message</button>
                 </form>
+                <div id="form-message" class="form-message" style="margin-top:1.2rem;text-align:center;min-height:2.2rem;"></div>
             </div>
         </div>
     </div>
