@@ -11,7 +11,16 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
       (function() {
-        emailjs.init("_q0ZQ9cWUZvIGCroz");
+        try {
+          if (typeof emailjs === 'undefined') {
+            console.error('EmailJS script failed to load');
+            return;
+          }
+          emailjs.init("_q0ZQ9cWUZvIGCroz");
+          console.log('EmailJS initialized successfully');
+        } catch (error) {
+          console.error('Error initializing EmailJS:', error);
+        }
       })();
     </script>
     <script src="script.js"></script>
