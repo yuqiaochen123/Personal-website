@@ -229,7 +229,7 @@
             <div id="chatbot-messages" class="chatbot-messages" style="min-height:0; max-height:300px; overflow-y:auto; margin-bottom:0.5rem; position:relative; z-index:1;"></div>
             <form id="chatbot-form" class="chatbot-form" style="display:flex; gap:0.5rem; position:relative; z-index:1;">
                 <input type="text" id="chatbot-input" placeholder="Ask me anything..." autocomplete="off" required style="flex:1; padding:0.6rem; border-radius:6px; border:1px solid #c9a96e; font-size:1rem;">
-                <button type="submit" style="background:#c9a96e; color:#fff; border:none; border-radius:6px; padding:0.6rem 1.2rem; font-weight:600; cursor:pointer;">Send</button>
+                <button type="submit" style="background:#c9a96e; color:#fff; border:none; border-radius:6px; padding:0.6rem 1.2rem; font-weight:600; cursor:pointer;">Ask</button>
             </form>
         </div>
 
@@ -281,6 +281,10 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="text/javascript">
+        // 2brain API key
+        const TWOBRAIN_API_KEY = '2B-zdv2yNDJRbOSwUMNHpoq0akOg42qJ0ivWw64VTHF4sCqazWgJC';
+    </script>
+    <script src="chatbot.js"></script>
 </body>
 </html> 
