@@ -1,0 +1,26 @@
+{
+  "name": "yuqiao-chen-website",
+  "version": "1.0.0",
+  "description": "A professional portfolio website showcasing my journey as a pianist, scholar, and artist.",
+  "main": "chatbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuqiaochen123/Personal-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuqiaochen123/Personal-website/issues"
+  },
+  "homepage": "https://github.com/yuqiaochen123/Personal-website#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
+  }
+}
