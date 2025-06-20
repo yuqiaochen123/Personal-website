@@ -441,4 +441,57 @@ html {
     top: 5.5rem;
     right: 1rem;
   }
-} 
+}
+
+/* Floating Chat Widget Styles */
+#chat-widget {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 370px;
+    max-height: 80vh;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+}
+
+#chat-header {
+    background: linear-gradient(135deg, #bfa181, #8c6e5d);
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+    cursor: pointer;
+}
+
+#send-button {
+    background: #c9a96e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+#send-button:hover {
+    background: #a98b6c;
+}
+
+.loading-indicator {
+    text-align: center;
+    color: #888;
+    padding: 10px;
+    font-style: italic;
+    float: left;
+}

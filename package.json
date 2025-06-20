@@ -1,10 +1,9 @@
 {
   "name": "yuqiao-chen-website",
   "version": "1.0.0",
-  "description": "A professional portfolio website showcasing my journey as a pianist, scholar, and artist.",
-  "main": "chatbot.js",
+  "description": "Personal website with 2brain.ai chatbot",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
@@ -20,8 +19,8 @@
   "homepage": "https://github.com/yuqiaochen123/Personal-website#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "node-fetch": "^3.3.2"
   }
 }

@@ -66,8 +66,76 @@ async function handleChatbotSubmit(e) {
 
 // Initialize chatbot
 document.addEventListener('DOMContentLoaded', () => {
-    const chatbotForm = document.getElementById('chatbot-form');
-    if (chatbotForm) {
-        chatbotForm.addEventListener('submit', handleChatbotSubmit);
+    const chatContainer = document.getElementById('chat-container');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+
+    if (!chatContainer || !messageInput || !sendButton) {
+        console.error('Chatbot elements not found. Make sure you have a chat-container, message-input, and send-button in your HTML.');
+        return;
     }
+
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.className = 'loading-indicator';
+    loadingIndicator.textContent = 'Thinking...';
+
+    let messages = [];
+
+    function addMessage(content, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.textContent = content;
+        messageDiv.appendChild(contentDiv);
+        
+        chatContainer.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const userInput = messageInput.value.trim();
+        if (!userInput) return;
+
+        addMessage(userInput, true);
+        messages.push({ role: 'user', content: userInput });
+        messageInput.value = '';
+        chatContainer.appendChild(loadingIndicator);
+
+        try {
+            const response = await fetch('http://localhost:3000/api/2brain', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const botResponse = data.choices[0].message.content;
+
+            messages.push({ role: 'assistant', content: botResponse });
+            
+            loadingIndicator.remove();
+            addMessage(botResponse);
+
+        } catch (error) {
+            console.error('Error:', error);
+            loadingIndicator.remove();
+            addMessage(`Sorry, I encountered an error: ${error.message}. Please try again.`);
+        }
+    }
+
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    addMessage("Hello! I am Yuqiao's AI assistant. Ask me anything about his experiences!");
 }); 

@@ -220,17 +220,22 @@
     <div class="page-content page-transition">
         <h1 class="page-title">Global Experience</h1>
 
-        <!-- Premium Chatbot Box (no faint background text) -->
-        <div class="chatbot-container" style="margin: 0 auto 1.2rem auto; max-width: 350px; position: relative; box-shadow: 0 2px 15px rgba(201,169,110,0.10); border: 1.5px solid #c9a96e; border-radius: 16px; background: #fffbe9; padding: 1.2rem 1rem 1rem 1rem;">
-            <div style="position: relative; z-index: 1; text-align:center; margin-bottom:1rem;">
-                <i class="fa fa-comments" style="font-size:2.2rem; color:#c9a96e; margin-bottom:0.5rem;"></i>
-                <div style="font-family:'Montserrat',sans-serif; color:#444; font-size:1.1rem; margin-top:0.3rem;">Chat with Yuqiao's AI assistant about his experiences! I can answer your questions about his musical journey, life abroad, or any other topics.</div>
+        <!-- Functional Chatbot Section -->
+        <div id="chat-section">
+            <div class="icon">
+                <i class="fas fa-comments"></i>
             </div>
-            <div id="chatbot-messages" class="chatbot-messages" style="min-height:0; max-height:300px; overflow-y:auto; margin-bottom:0.5rem; position:relative; z-index:1;"></div>
-            <form id="chatbot-form" class="chatbot-form" style="display:flex; gap:0.5rem; position:relative; z-index:1;">
-                <input type="text" id="chatbot-input" placeholder="Ask me anything..." autocomplete="off" required style="flex:1; padding:0.6rem; border-radius:6px; border:1px solid #c9a96e; font-size:1rem;">
-                <button type="submit" style="background:#c9a96e; color:#fff; border:none; border-radius:6px; padding:0.6rem 1.2rem; font-weight:600; cursor:pointer;">Ask</button>
-            </form>
+            <h2>Chat with Yuqiao's AI assistant!</h2>
+            <p>I can answer your questions about his musical journey, life abroad, or any other topics.</p>
+            
+            <div id="chat-container">
+                <!-- Messages will be appended here by chatbot.js -->
+            </div>
+            
+            <div class="chat-input-container">
+                <input type="text" id="message-input" placeholder="Ask me anything..." autocomplete="off">
+                <button id="send-button">Ask</button>
+            </div>
         </div>
 
         <div class="experience-grid">
@@ -276,6 +281,15 @@
                     <h2 class="country-name">International Performances</h2>
                     <div class="country-date">2020 - Present</div>
                     <p class="country-description">Performed across the globe including Berlin, Prague, San Francisco, Hong Kong, Moscow, Shanghai, and Bangkok. Many Carnegie Hall invitations (postponed due to COVID-19 pandemic).</p>
+                </div>
+            </div>
+
+            <div class="country-card">
+                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba" alt="Switzerland" class="country-image">
+                <div class="country-content">
+                    <h2 class="country-name">Switzerland</h2>
+                    <div class="country-date">2016 - 2018</div>
+                    <p class="country-description">Studied at the Pre-College of the Zurich University of the Arts (ZHdK) with Professor Eckart Heiligers, where I deepened my understanding of classical music and performance.</p>
                 </div>
             </div>
         </div>
