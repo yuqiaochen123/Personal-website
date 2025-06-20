@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         messageElement.classList.add('chat-message', `${sender}-message`);
         
         if (sender === 'user') {
-            messageElement.innerHTML = `<strong>You:</strong> ${text}`;
+            messageElement.textContent = text;
         } else if (sender === 'ai') {
             messageElement.innerHTML = `<strong>Yuqiao's AI assistant:</strong> ${text}`;
         } else {

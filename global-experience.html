@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Belinda&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=1.0">
     <style>
         * {
             margin: 0;
@@ -218,11 +219,14 @@
     </nav>
 
     <div class="page-content page-transition">
-        <h1 class="page-title">Global Experience</h1>
+        <div class="title-container">
+            <h1 class="page-title">Global Experience</h1>
+            <button id="toggle-chatbot-btn">Chat with AI</button>
+        </div>
 
         <!-- Functional Chatbot Section -->
-        <div id="chatbot-container">
-            <div id="chat-header">
+        <div id="chatbot-container" style="display: none; flex-direction: column; height: 500px; max-height: 80vh;">
+            <div id="chat-header" style="flex-shrink: 0;">
                 <div class="icon">
                     <i class="fas fa-comments"></i>
                 </div>
@@ -230,11 +234,11 @@
                 <p>I can answer your questions about his musical journey, life abroad, or any other topics.</p>
             </div>
             
-            <div id="chat-history">
+            <div id="chat-history" style="flex-grow: 1; overflow-y: auto;">
                 <!-- Messages will be appended here by chatbot.js -->
             </div>
             
-            <div class="chat-input-container">
+            <div class="chat-input-container" style="flex-shrink: 0;">
                 <input type="text" id="user-input" placeholder="Ask me anything..." autocomplete="off">
                 <button id="send-button">Ask</button>
             </div>
@@ -289,5 +293,19 @@
     </div>
 
     <script src="chatbot-v3.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('toggle-chatbot-btn');
+            const chatbotContainer = document.getElementById('chatbot-container');
+
+            if (toggleButton && chatbotContainer) {
+                toggleButton.addEventListener('click', () => {
+                    const isHidden = chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '';
+                    chatbotContainer.style.display = isHidden ? 'flex' : 'none';
+                    toggleButton.textContent = isHidden ? 'Close Chat' : 'Chat with AI';
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
