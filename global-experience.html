@@ -228,13 +228,13 @@
             <h2>Chat with Yuqiao's AI assistant!</h2>
             <p>I can answer your questions about his musical journey, life abroad, or any other topics.</p>
             
-            <div id="chatbot-messages">
+            <div id="chat-history">
                 <!-- Messages will be appended here by chatbot.js -->
             </div>
             
             <div class="chat-input-container">
-                <input type="text" id="chatbot-input" placeholder="Ask me anything..." autocomplete="off">
-                <button id="chatbot-send-button">Ask</button>
+                <input type="text" id="user-input" placeholder="Ask me anything..." autocomplete="off">
+                <button id="send-button">Ask</button>
             </div>
         </div>
 
@@ -285,20 +285,25 @@
             </div>
 
             <div class="country-card">
-                <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba" alt="Switzerland" class="country-image">
+                <img src="https://images.unsplash.com/photo-15170941922-827c1248d3c1" alt="Switzerland" class="country-image">
                 <div class="country-content">
                     <h2 class="country-name">Switzerland</h2>
                     <div class="country-date">2016 - 2018</div>
                     <p class="country-description">Studied at the Pre-College of the Zurich University of the Arts (ZHdK) with Professor Eckart Heiligers, where I deepened my understanding of classical music and performance.</p>
                 </div>
             </div>
+
+            <div class="country-card">
+                <img src="https://images.unsplash.com/photo-1558280625-341e2d274552" alt="China" class="country-image">
+                <div class="country-content">
+                    <h2 class="country-name">China</h2>
+                    <div class="country-date">2005 - 2016</div>
+                    <p class="country-description">Began my piano journey in China, laying the foundation for my musical career. This period was marked by rigorous training and early exposure to classical music.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script type="text/javascript">
-        // 2brain API key
-        const TWOBRAIN_API_KEY = '2B-zdv2yNDJRbOSwUMNHpoq0akOg42qJ0ivWw64VTHF4sCqazWgJC';
-    </script>
-    <script src="chatbot.js"></script>
+    <script src="chatbot-v2.js" defer></script>
 </body>
 </html> 
