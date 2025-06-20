@@ -26,7 +26,7 @@ async function handleChatbotSubmit(e) {
         addMessage('Thinking...');
         
         // Call 2brain API (correct endpoint and body)
-        const response = await fetch('http://localhost:3000/api/2brain', {
+        const response = await fetch('https://chatbot.yuqiaochen.uk/api/2brain', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -66,24 +66,24 @@ async function handleChatbotSubmit(e) {
 
 // Initialize chatbot
 document.addEventListener('DOMContentLoaded', () => {
-    const chatContainer = document.getElementById('chat-container');
-    const messageInput = document.getElementById('message-input');
-    const sendButton = document.getElementById('send-button');
+    const chatContainer = document.getElementById('chatbot-messages');
+    const messageInput = document.getElementById('chatbot-input');
+    const sendButton = document.getElementById('chatbot-send-button');
 
     if (!chatContainer || !messageInput || !sendButton) {
-        console.error('Chatbot elements not found. Make sure you have a chat-container, message-input, and send-button in your HTML.');
+        console.error('Chatbot elements not found. Make sure you have chatbot-messages, chatbot-input, and chatbot-send-button in your HTML.');
         return;
     }
 
     const loadingIndicator = document.createElement('div');
-    loadingIndicator.className = 'loading-indicator';
+    loadingIndicator.className = 'chatbot-message ai';
     loadingIndicator.textContent = 'Thinking...';
 
     let messages = [];
 
     function addMessage(content, isUser = false) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+        messageDiv.className = `chatbot-message ${isUser ? 'user-message' : 'ai'}`;
         
         const contentDiv = document.createElement('div');
         contentDiv.textContent = content;
@@ -103,15 +103,17 @@ document.addEventListener('DOMContentLoaded', () => {
         chatContainer.appendChild(loadingIndicator);
 
         try {
-            const response = await fetch('http://localhost:3000/api/2brain', {
+            const response = await fetch('https://chatbot.yuqiaochen.uk/api/2brain', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages })
             });
 
+            chatContainer.removeChild(loadingIndicator);
+
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.details || `HTTP error! status: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(errorText || `HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
@@ -119,13 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             messages.push({ role: 'assistant', content: botResponse });
             
-            loadingIndicator.remove();
             addMessage(botResponse);
 
         } catch (error) {
             console.error('Error:', error);
-            loadingIndicator.remove();
-            addMessage(`Sorry, I encountered an error: ${error.message}. Please try again.`);
+            if (chatContainer.contains(loadingIndicator)){
+                 chatContainer.removeChild(loadingIndicator);
+            }
+            addMessage(`Sorry, I encountered an error: Load failed. Please try again.`);
         }
     }
 
