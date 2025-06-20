@@ -34,7 +34,8 @@ export default {
           messages: transformedMessages,
           max_tokens: 1000,
           temperature: 0.7,
-          intent_engine: 0
+          intent_engine: 0,
+          stream: true
         })
       });
 
@@ -43,16 +44,22 @@ export default {
         throw new Error(`2brain API returned ${response.status}: ${errorText}`);
       }
 
-      const data = await response.json();
-      
+      if (!response.body) {
+        throw new Error('API response is not streamable');
+      }
+
       const corsHeaders = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
       };
-      
-      return new Response(JSON.stringify(data), { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+
+      return new Response(response.body, {
+        headers: corsHeaders,
+        status: response.status
       });
 
     } catch (error) {
