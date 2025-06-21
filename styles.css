@@ -578,6 +578,22 @@ html {
     padding: 10px 15px;
 }
 
+/* Animation for the "Thinking..." dots */
+.thinking-message .dot {
+    display: inline-block;
+    animation: blink 1.4s infinite both;
+}
+
+.thinking-message .dot:nth-of-type(1) { animation-delay: 0s; }
+.thinking-message .dot:nth-of-type(2) { animation-delay: 0.2s; }
+.thinking-message .dot:nth-of-type(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0% { opacity: 0.2; }
+  20% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
 .chat-input-container {
     display: flex;
     align-items: center;
@@ -638,16 +654,14 @@ html {
 }
 
 .title-container {
-    position: relative;
-    margin-bottom: 2rem;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    gap: 1rem; /* This creates space between the title and the button */
+    margin-bottom: 2rem;
 }
 
 #toggle-chatbot-btn {
-    position: absolute;
-    right: 0;
     background-color: #c9a96e;
     color: white;
     border: none;

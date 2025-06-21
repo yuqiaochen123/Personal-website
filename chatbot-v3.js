@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
             messageElement.textContent = text;
         } else if (sender === 'ai') {
             messageElement.innerHTML = `<strong>Yuqiao's AI assistant:</strong> ${text}`;
+        } else if (sender === 'thinking') {
+            messageElement.innerHTML = `${text}<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>`;
         } else {
             messageElement.textContent = text;
         }
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         messages.push({ role: 'user', content: message });
 
         // Show "Thinking..." message
-        const thinkingMessage = appendMessage('Thinking...', 'thinking');
+        const thinkingMessage = appendMessage('Thinking', 'thinking');
 
         try {
             const response = await fetch('https://chatbot-api.yuqiaochen.workers.dev', {
@@ -62,9 +64,39 @@ document.addEventListener('DOMContentLoaded', () => {
             let contentSpan = null;
             let buffer = '';
 
+            let characterQueue = [];
+            let isTyping = false;
+
+            function processQueue() {
+                if (characterQueue.length === 0) {
+                    isTyping = false;
+                    return;
+                }
+                isTyping = true;
+                
+                const char = characterQueue.shift();
+                fullResponse += char;
+                const cleanedResponse = fullResponse.replace(/(\*\*|###|---|- |#)/g, '');
+                if (contentSpan) {
+                    contentSpan.textContent = cleanedResponse;
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                }
+
+                setTimeout(processQueue, 30); // Adjust this value to control typing speed
+            }
+
             while (true) {
                 const { done, value } = await reader.read();
-                if (done) break;
+                if (done) {
+                    // Wait for the typewriter effect to finish before breaking
+                    const waitForTyping = async () => {
+                        while (isTyping) {
+                            await new Promise(resolve => setTimeout(resolve, 50));
+                        }
+                    };
+                    await waitForTyping();
+                    break;
+                }
 
                 buffer += decoder.decode(value, { stream: true });
                 const lines = buffer.split('\n'); // Corrected from '\\n' to '\n'
@@ -73,10 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (const line of lines) {
                     if (line.startsWith('data: ')) {
                         const jsonString = line.substring(6).trim(); // Remove potential whitespace
-                        if (jsonString === '[DONE]') {
-                            continue;
-                        }
-                        if (jsonString === '') {
+                        if (jsonString === '[DONE]' || jsonString === '') {
                             continue;
                         }
                         try {
@@ -94,14 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
                                     chatHistory.appendChild(aiMessageElement);
                                     contentSpan = aiMessageElement.querySelector('.content');
                                 }
-
-                                fullResponse += content;
-                                // Clean the full response of markdown characters before displaying
-                                const cleanedResponse = fullResponse.replace(/(\*\*|###|---|- |#)/g, '');
-                                if (contentSpan) {
-                                    contentSpan.textContent = cleanedResponse;
+                                
+                                for(const char of content) {
+                                    characterQueue.push(char);
                                 }
-                                chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll
+                                
+                                if (!isTyping) {
+                                    processQueue();
+                                }
                             }
                         } catch (e) {
                             console.error("Error parsing stream chunk:", jsonString, e);
