@@ -205,6 +205,42 @@ html {
     }
 }
 
+/* Preloader Styles */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preloader-fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Main content fade-in animation */
+@keyframes fadeInContent {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.content-fade-in {
+    animation: fadeInContent 0.8s ease-in forwards;
+}
+
 .form-message {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.1rem;

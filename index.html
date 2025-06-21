@@ -347,46 +347,55 @@
         ↑
     </button>
 
-    <!-- Piano Navigation -->
-    <nav class="piano-navbar">
-        <div class="piano-keys">
-            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
-                <a href="index.html" class="white-key">Home</a>
-                <div class="black-key"></div>
-            </div>
-            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
-                <a href="global-experience.html" class="white-key">Global</a>
-                <div class="black-key"></div>
-            </div>
-            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
-                <a href="accolades.html" class="white-key">Accolades</a>
-                <div class="black-key"></div>
-            </div>
-            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
-                <a href="media-blog.html" class="white-key">Media</a>
-                <div class="black-key"></div>
-            </div>
-            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
-                <a href="contact.html" class="white-key">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Video Preloader -->
+    <div id="preloader">
+        <video id="preloader-video" width="100%" height="100%" autoplay muted playsinline>
+            <source src="piano animation.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
 
-    <nav class="navbar" style="display:none;">
-        <button class="nav-toggle">
-            <div class="hamburger"></div>
-        </button>
-        <div class="nav-menu">
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="global-experience.html">Global Experience</a>
-                <a href="accolades.html">Accolades</a>
-                <a href="contact.html">Find me</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Main Content Wrapper -->
+    <div id="main-content" style="display: none;">
 
-    <main id="main-content">
+        <nav class="piano-navbar">
+            <div class="piano-keys">
+                <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                    <a href="index.html" class="white-key">Home</a>
+                    <div class="black-key"></div>
+                </div>
+                <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                    <a href="global-experience.html" class="white-key">Global</a>
+                    <div class="black-key"></div>
+                </div>
+                <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                    <a href="accolades.html" class="white-key">Accolades</a>
+                    <div class="black-key"></div>
+                </div>
+                <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                    <a href="media-blog.html" class="white-key">Media</a>
+                    <div class="black-key"></div>
+                </div>
+                <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                    <a href="contact.html" class="white-key">Contact</a>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="navbar" style="display:none;">
+            <button class="nav-toggle">
+                <div class="hamburger"></div>
+            </button>
+            <div class="nav-menu">
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="global-experience.html">Global Experience</a>
+                    <a href="accolades.html">Accolades</a>
+                    <a href="contact.html">Find me</a>
+                </div>
+            </div>
+        </nav>
+
         <section class="hero-section">
             <img src="635be9f3760ed2dd92f14f2a187685a6.jpg" alt="Piano performance" class="hero-image">
             <div class="hero-background"></div>
@@ -399,40 +408,47 @@
                 </div>
             </div>
         </section>
-    </main>
 
-    <footer style="text-align:center; color:#888; font-family:'Montserrat',sans-serif; font-size:1rem; margin: 2rem 0 1rem 0;">
-        Last updated: July 10, 2024
-    </footer>
+        <footer style="text-align:center; color:#888; font-family:'Montserrat',sans-serif; font-size:1rem; margin: 2rem 0 1rem 0;">
+            <p>&copy; 2024 Yuqiao Chen. All Rights Reserved.</p>
+        </footer>
+
+    </div> <!-- End Main Content Wrapper -->
 
     <script>
-        console.log("Hello from the console!");
-        console.log("Script loaded!");
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.getElementById('main-content');
 
-        document.querySelector('.nav-toggle').addEventListener('click', function() {
-            this.classList.toggle('active');
-            document.querySelector('.nav-menu').classList.toggle('active');
-        });
+            // Check if the preloader has already been shown in this session
+            if (sessionStorage.getItem('preloaderShown')) {
+                preloader.style.display = 'none';
+                mainContent.style.display = 'block';
+                // No fade-in needed if preloader wasn't shown
+                return;
+            }
 
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.querySelector('.nav-toggle').classList.remove('active');
-                document.querySelector('.nav-menu').classList.remove('active');
-            });
-        });
+            document.body.style.overflow = 'hidden'; // Prevent scrolling during preloader
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const navMenu = document.querySelector('.nav-menu');
-            const navToggle = document.querySelector('.nav-toggle');
-            if (!navMenu.contains(e.target) && !navToggle.contains(e.target) && navMenu.classList.contains('active')) {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
+            // Set a 2-second timer to fade out the preloader
+            setTimeout(fadeOutPreloader, 2000);
+
+            function fadeOutPreloader() {
+                // Ensure this function only runs once
+                if (preloader.style.display === 'none') return;
+
+                preloader.classList.add('preloader-fade-out');
+                
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    mainContent.classList.add('content-fade-in'); // Apply the fade-in animation
+                    document.body.style.overflow = 'auto'; // Restore scroll
+                    sessionStorage.setItem('preloaderShown', 'true');
+                }, 500); // This should match the CSS transition duration
             }
         });
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
 
