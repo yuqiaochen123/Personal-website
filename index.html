@@ -276,7 +276,7 @@
             gap: 0;
         }
         .white-key {
-            width: 140px;
+            width: 160px;
             height: 90px;
             background: linear-gradient(to bottom, #fff 80%, #ececec 100%);
             border: 1.5px solid #bbb;
@@ -328,8 +328,45 @@
         /* Responsive */
         @media (max-width: 600px) {
             .piano-navbar, .piano-keys { height: 50px; }
-            .white-key { width: 80px; height: 50px; font-size: 0.8rem; }
+            .piano-keys {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                width: 100vw;
+                flex-wrap: nowrap;
+            }
+            .white-key {
+                width: 100px;
+                height: 50px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                padding: 0 4px;
+            }
             .black-key { width: 18px; height: 28px; margin-left: 0; }
+        }
+        .piano-gradient-left, .piano-gradient-right {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .piano-gradient-left, .piano-gradient-right {
+                display: block;
+                position: absolute;
+                top: 0;
+                width: 32px;
+                height: 100%;
+                z-index: 2;
+                pointer-events: none;
+            }
+            .piano-gradient-left {
+                left: 0;
+                background: linear-gradient(to right, rgba(255,255,255,0.95) 70%, rgba(255,255,255,0));
+            }
+            .piano-gradient-right {
+                right: 0;
+                background: linear-gradient(to left, rgba(255,255,255,0.95) 70%, rgba(255,255,255,0));
+            }
+            .piano-navbar {
+                position: relative;
+            }
         }
     </style>
 </head>
@@ -359,10 +396,11 @@
     <div id="main-content" style="display: none;">
 
         <nav class="piano-navbar">
+            <div class="piano-gradient-left"></div>
+            <div class="piano-gradient-right"></div>
             <div class="piano-keys">
                 <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                     <a href="index.html" class="white-key">Home</a>
-                    <div class="black-key"></div>
                 </div>
                 <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                     <a href="global-experience.html" class="white-key">Global</a>
@@ -375,6 +413,9 @@
                 <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                     <a href="media-blog.html" class="white-key">Media</a>
                     <div class="black-key"></div>
+                </div>
+                <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                    <a href="karma-and-me.html" class="white-key">Karma & Me</a>
                 </div>
                 <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                     <a href="contact.html" class="white-key">Contact</a>
@@ -404,7 +445,7 @@
                 <p class="hero-subtitle">A Journey Through Music</p>
                 <a href="global-experience.html" class="cta-button">Explore My Journey</a>
                 <div class="update-announcement" style="background: none; border: none; color: #c9a96e; border-radius: 0; padding: 0; margin: 3.5rem auto 0 auto; max-width: 420px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.93rem; font-weight: 500; box-shadow: none;">
-                    <span style="font-size:0.93rem; font-weight:600; color:#c9a96e;">Update:</span> Site refreshed with new features and fixes. <span style="font-size:0.91rem; color:#c9a96e99;">(Last updated: June 21, 2025)</span>
+                    <span style="font-size:0.93rem; font-weight:600; color:#c9a96e;">Update:</span> Site refreshed with new features and fixes. <span style="font-size:0.91rem; color:#c9a96e99;">(Last updated: June 22, 2024)</span>
                 </div>
             </div>
         </section>
