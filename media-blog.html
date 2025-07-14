@@ -108,7 +108,7 @@
             gap: 0;
         }
         .white-key {
-            width: 140px;
+            width: 160px;
             height: 90px;
             background: linear-gradient(to bottom, #fff 80%, #ececec 100%);
             border: 1.5px solid #bbb;
@@ -223,14 +223,40 @@
         @media (max-width: 900px) {
             .timeline-bar { display: none; }
         }
+        .piano-gradient-left, .piano-gradient-right {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .piano-gradient-left, .piano-gradient-right {
+                display: block;
+                position: absolute;
+                top: 0;
+                width: 32px;
+                height: 100%;
+                z-index: 2;
+                pointer-events: none;
+            }
+            .piano-gradient-left {
+                left: 0;
+                background: linear-gradient(to right, rgba(255,255,255,0.95) 70%, rgba(255,255,255,0));
+            }
+            .piano-gradient-right {
+                right: 0;
+                background: linear-gradient(to left, rgba(255,255,255,0.95) 70%, rgba(255,255,255,0));
+            }
+            .piano-navbar {
+                position: relative;
+            }
+        }
     </style>
 </head>
 <body>
     <nav class="piano-navbar">
+        <div class="piano-gradient-left"></div>
+        <div class="piano-gradient-right"></div>
         <div class="piano-keys">
             <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                 <a href="index.html" class="white-key">Home</a>
-                <div class="black-key"></div>
             </div>
             <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                 <a href="global-experience.html" class="white-key">Global</a>
@@ -243,6 +269,9 @@
             <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                 <a href="media-blog.html" class="white-key">Media</a>
                 <div class="black-key"></div>
+            </div>
+            <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
+                <a href="karma-and-me.html" class="white-key">Karma & Me</a>
             </div>
             <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end;">
                 <a href="contact.html" class="white-key">Contact</a>
