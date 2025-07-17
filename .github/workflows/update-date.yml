@@ -1,0 +1,49 @@
+name: Update Last Modified Date
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'index.html'  # Prevent infinite loops by ignoring changes to index.html
+
+jobs:
+  update-date:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Update date in index.html
+      run: |
+        # Get current date in the format "Month DD, YYYY"
+        CURRENT_DATE=$(date '+%B %d, %Y')
+        
+        # Update the date in index.html
+        # This uses sed to replace the date pattern while preserving the exact format
+        sed -i "s/(Last updated: [A-Za-z]\+ [0-9]\+, [0-9]\{4\})/(Last updated: $CURRENT_DATE)/g" index.html
+        
+        # Show what was changed
+        echo "Updated date to: $CURRENT_DATE"
+    
+    - name: Commit and push changes
+      run: |
+        # Configure git
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # Check if there are any changes
+        if git diff --quiet index.html; then
+          echo "No changes to commit"
+        else
+          # Add the modified file
+          git add index.html
+          
+          # Commit with a descriptive message
+          git commit -m "Auto-update last modified date to $(date '+%B %d, %Y')"
+          
+          # Push the changes
+          git push
+        fi 
