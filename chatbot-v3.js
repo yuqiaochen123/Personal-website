@@ -97,8 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "What competitions has he won?",
         "How did he start playing piano?",
         "What's his practice routine?",
-        "Where has he performed?",
-        "What's his advice for young musicians?"
+        "Where has he performed?"
     ];
 
     function createQuickResponseButtons() {
