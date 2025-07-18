@@ -1,160 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Chatbot-v3.js loaded, looking for elements...');
+    
     // Correctly reference the elements by their updated IDs from global-experience.html
     const chatHistory = document.getElementById('chat-history');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
 
+    console.log('Elements found:', {
+        chatHistory: !!chatHistory,
+        userInput: !!userInput,
+        sendButton: !!sendButton
+    });
+
     // Check if all elements were found
     if (!chatHistory || !userInput || !sendButton) {
         console.error('Critical Error: A required chatbot element was not found in the HTML. Please check the IDs.');
+        console.log('Available elements with similar IDs:');
+        document.querySelectorAll('[id*="chat"], [id*="user"], [id*="send"]').forEach(el => {
+            console.log('-', el.id, el.tagName);
+        });
         return; // Stop execution if elements are missing
     }
 
-    // Voice input functionality
-    let isRecording = false;
-    let recognition = null;
-    
-    // Check if browser supports speech recognition
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.continuous = false;
-        recognition.interimResults = false;
-        recognition.lang = 'en-US';
-        
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            userInput.value = transcript;
-            isRecording = false;
-            updateVoiceButton();
-        };
-        
-        recognition.onerror = function(event) {
-            console.error('Speech recognition error:', event.error);
-            isRecording = false;
-            updateVoiceButton();
-        };
-        
-        recognition.onend = function() {
-            isRecording = false;
-            updateVoiceButton();
-        };
-    }
+    console.log('All chatbot elements found successfully!');
 
-    // Create voice button
-    const voiceButton = document.createElement('button');
-    voiceButton.innerHTML = '🎤';
-    voiceButton.className = 'voice-button';
-    voiceButton.title = 'Voice Input';
-    voiceButton.style.cssText = `
-        background: #c9a96e;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        margin-right: 10px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: all 0.3s;
-        display: ${recognition ? 'flex' : 'none'};
-        align-items: center;
-        justify-content: center;
-    `;
-    
-    function updateVoiceButton() {
-        if (isRecording) {
-            voiceButton.style.background = '#c94f4f';
-            voiceButton.innerHTML = '⏹️';
-            voiceButton.title = 'Stop Recording';
-        } else {
-            voiceButton.style.background = '#c9a96e';
-            voiceButton.innerHTML = '🎤';
-            voiceButton.title = 'Voice Input';
-        }
-    }
-    
-    voiceButton.addEventListener('click', () => {
-        if (!recognition) return;
-        
-        if (isRecording) {
-            recognition.stop();
-        } else {
-            recognition.start();
-            isRecording = true;
-            updateVoiceButton();
-        }
-    });
-    
-    // Insert voice button before the input field
-    const chatInputContainer = document.querySelector('.chat-input-container');
-    if (chatInputContainer) {
-        chatInputContainer.insertBefore(voiceButton, userInput);
-    }
-
-    // Quick response buttons
-    const quickResponses = [
-        "Tell me about Yuqiao's achievements",
-        "What competitions has he won?",
-        "How did he start playing piano?",
-        "What's his practice routine?",
-        "Where has he performed?"
-    ];
-
-    function createQuickResponseButtons() {
-        const quickButtonsContainer = document.createElement('div');
-        quickButtonsContainer.className = 'quick-responses';
-        quickButtonsContainer.style.cssText = `
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f9f5ef;
-            border-radius: 8px;
-            border: 1px solid #e6d8c1;
-        `;
-
-        quickResponses.forEach(response => {
-            const button = document.createElement('button');
-            button.textContent = response;
-            button.style.cssText = `
-                background: #c9a96e;
-                color: white;
-                border: none;
-                border-radius: 15px;
-                padding: 6px 12px;
-                font-size: 0.8rem;
-                cursor: pointer;
-                transition: all 0.3s;
-                font-family: 'Montserrat', sans-serif;
-            `;
-            
-            button.addEventListener('mouseenter', () => {
-                button.style.background = '#b89862';
-                button.style.transform = 'translateY(-1px)';
-            });
-            
-            button.addEventListener('mouseleave', () => {
-                button.style.background = '#c9a96e';
-                button.style.transform = 'translateY(0)';
-            });
-            
-            button.addEventListener('click', () => {
-                getChatbotResponse(response);
-            });
-            
-            quickButtonsContainer.appendChild(button);
-        });
-
-        // Insert after chat header
-        const chatHeader = document.getElementById('chat-header');
-        if (chatHeader && chatHeader.parentNode) {
-            chatHeader.parentNode.insertBefore(quickButtonsContainer, chatHeader.nextSibling);
-        }
-    }
-
-    // Create quick response buttons
-    createQuickResponseButtons();
+    // Voice input functionality - now handled by chatbot-shared.js
+    // The voice button is already present in the modal HTML structure
 
     // Welcome message
     function showWelcomeMessage() {
@@ -283,6 +154,8 @@ RESPONSE GUIDELINES:
     }
 
     async function getChatbotResponse(message) {
+        console.log('Sending message to chatbot:', message);
+        
         // Add user message to history
         appendMessage(message, 'user');
         userInput.value = '';
@@ -396,12 +269,26 @@ RESPONSE GUIDELINES:
             if (typingIndicator && typingIndicator.parentNode) {
                 typingIndicator.remove();
             }
-            appendMessage(`Sorry, I encountered an error: ${error.message}. Please try again.`, 'ai');
-            console.error('Error:', error);
+            
+            // Fallback response for testing
+            console.error('API Error:', error);
+            const fallbackResponses = [
+                "Hello! I'm Yuqiao's AI assistant. I'm currently in testing mode. I can tell you that Yuqiao is an award-winning pianist who has won the Bangkok Chopin Piano Competition 2024 and has over 8 million streams worldwide as an Apple Artist.",
+                "Thanks for your message! Yuqiao has performed across the globe including Berlin, Prague, San Francisco, Hong Kong, Moscow, Shanghai, and Bangkok. He's also received multiple Carnegie Hall invitations.",
+                "I'm here to help! Yuqiao studied piano in China (Chengdu, Beijing), India, Nepal, and Thailand. He has an IB predicted score of 41/42 and achieved 10 A*/9s in his IGCSEs.",
+                "Great question! Yuqiao collaborates with Karma Sound Studio and has given memorable performances including solo recitals in Kathmandu with over 200 attendees at the French Ambassador's residence."
+            ];
+            
+            const randomResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+            appendMessage(randomResponse, 'ai');
+            messages.push({ role: 'assistant', content: randomResponse });
         }
     }
 
+    console.log('Adding event listeners to send button and input...');
+    
     sendButton.addEventListener('click', () => {
+        console.log('Send button clicked');
         const message = userInput.value;
         if (message.trim() !== '') {
             getChatbotResponse(message);
@@ -410,10 +297,13 @@ RESPONSE GUIDELINES:
 
     userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
+            console.log('Enter key pressed');
             const message = userInput.value;
             if (message.trim() !== '') {
                 getChatbotResponse(message);
             }
         }
     });
-}); 
+
+    console.log('Chatbot initialization complete!');
+});

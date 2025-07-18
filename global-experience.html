@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css?v=1.0">
+    <link rel="stylesheet" href="chatbot-shared.css">
     <style>
         * {
             margin: 0;
@@ -263,27 +264,6 @@
     <div class="page-content page-transition">
         <div class="title-container">
         <h1 class="page-title">Global Experience</h1>
-            <button id="toggle-chatbot-btn">Chat with AI</button>
-        </div>
-
-        <!-- Functional Chatbot Section -->
-        <div id="chatbot-container" style="display: none; flex-direction: column; height: 500px; max-height: 80vh;">
-            <div id="chat-header" style="flex-shrink: 0;">
-                <div class="icon">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <h2>Chat with Yuqiao's AI assistant!</h2>
-                <p>I can answer your questions about his musical journey, life abroad, or any other topics.</p>
-            </div>
-            
-            <div id="chat-history" style="flex-grow: 1; overflow-y: auto;">
-                <!-- Messages will be appended here by chatbot.js -->
-            </div>
-            
-            <div class="chat-input-container" style="flex-shrink: 0;">
-                <input type="text" id="user-input" placeholder="Ask me anything..." autocomplete="off">
-                <button id="send-button">Ask</button>
-            </div>
         </div>
 
         <div class="experience-grid">
@@ -334,20 +314,45 @@
         </div>
     </div>
 
-    <script src="chatbot-v3.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleButton = document.getElementById('toggle-chatbot-btn');
-            const chatbotContainer = document.getElementById('chatbot-container');
+    <!-- AI Chatbot Button -->
+    <button id="ai-chatbot-btn" class="ai-chatbot-button" aria-label="Open AI Chatbot">
+        <i class="fas fa-comments"></i>
+        <span class="ai-text">Chat with AI</span>
+    </button>
 
-            if (toggleButton && chatbotContainer) {
-                toggleButton.addEventListener('click', () => {
-                    const isHidden = chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '';
-                    chatbotContainer.style.display = isHidden ? 'flex' : 'none';
-                    toggleButton.textContent = isHidden ? 'Close Chat' : 'Chat with AI';
-                });
-            }
-        });
+    <!-- AI Chatbot Modal Overlay -->
+    <div id="ai-chatbot-overlay" class="ai-chatbot-overlay">
+        <div id="ai-chatbot-modal" class="ai-chatbot-modal">
+            <div class="ai-chatbot-header">
+                <h2>Yuqiao's AI Assistant</h2>
+                <button id="ai-chatbot-close" class="ai-chatbot-close">×</button>
+            </div>
+            <div class="ai-quick-suggestions">
+                <button class="suggestion-btn" data-question="Tell me about Yuqiao's achievements">Achievements</button>
+                <button class="suggestion-btn" data-question="What competitions has he won?">Competitions</button>
+                <button class="suggestion-btn" data-question="How did he start playing piano?">Piano Journey</button>
+                <button class="suggestion-btn" data-question="What's his practice routine?">Practice Tips</button>
+                <button class="suggestion-btn" data-question="Where has he performed?">Performances</button>
+            </div>
+            <div id="chat-history" class="ai-chat-history">
+                <!-- Messages will be appended here by chatbot.js -->
+            </div>
+            <div class="ai-chat-input-container">
+                <input type="text" id="user-input" placeholder="Ask me anything about music, performances, or my journey..." autocomplete="off">
+                <button id="voice-button" class="voice-btn" aria-label="Voice input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Scripts -->
+    <script src="chatbot-v3.js" defer></script>
+    <script src="chatbot-shared.js" defer></script>
+
+    <script>
+        // Page-specific functionality can be added here if needed
     </script>
 </body>
 </html> 
