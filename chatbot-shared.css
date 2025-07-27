@@ -1,7 +1,7 @@
 /* AI Chatbot Button - Shared across all pages */
 .ai-chatbot-button {
     position: fixed;
-    top: 80px; /* Position below navigation bar */
+    top: 100px; /* Position below navigation bar with more clearance */
     right: 20px;
     z-index: 1000;
     background-color: #c9a96e;
@@ -268,7 +268,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .ai-chatbot-button {
-        top: 70px; /* Position below navigation bar on mobile */
+        top: 90px; /* Position below navigation bar on mobile with more clearance */
         right: 15px;
         padding: 10px 16px;
         font-size: 0.8rem;
@@ -306,13 +306,43 @@
     }
 }
 
+/* Tablet and iPad specific adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .ai-chatbot-button {
+        top: 105px; /* Position below navigation bar on tablets/iPads with more clearance */
+        right: 20px;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Large tablets and small desktops */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .ai-chatbot-button {
+        top: 110px; /* Position below navigation bar on large tablets with more clearance */
+        right: 25px;
+        padding: 12px 22px;
+        font-size: 1rem;
+    }
+}
+
+/* iPad Pro and large tablets */
+@media (min-width: 1367px) and (max-width: 1440px) {
+    .ai-chatbot-button {
+        top: 115px; /* Position below navigation bar on iPad Pro with more clearance */
+        right: 30px;
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+}
+
 @media (max-width: 480px) {
     .ai-text {
         display: none;
     }
 
     .ai-chatbot-button {
-        top: 70px; /* Maintain position below navigation bar */
+        top: 90px; /* Maintain position below navigation bar with more clearance */
         width: 50px;
         height: 50px;
         border-radius: 50%;
