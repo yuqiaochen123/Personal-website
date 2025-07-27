@@ -802,18 +802,18 @@ html {
         display: block;
         position: absolute;
         top: 0;
-        width: 32px;
+        width: 12px;
         height: 100%;
         z-index: 2;
         pointer-events: none;
     }
     .piano-gradient-left {
         left: 0;
-        background: linear-gradient(to right, rgba(255,255,255,0.95) 70%, rgba(255,255,255,0));
+        background: linear-gradient(to right, rgba(255,255,255,0.6) 30%, rgba(255,255,255,0));
     }
     .piano-gradient-right {
         right: 0;
-        background: linear-gradient(to left, rgba(255,255,255,0.95) 70%, rgba(255,255,255,0));
+        background: linear-gradient(to left, rgba(255,255,255,0.6) 30%, rgba(255,255,255,0));
     }
     .piano-navbar {
         position: relative;
