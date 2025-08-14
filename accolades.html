@@ -413,6 +413,12 @@
         <span class="ai-text">Chat with AI</span>
     </button>
 
+    <!-- SATB Projects Button -->
+    <button id="satb-projects-btn" class="ai-chatbot-button" aria-label="Open SATB Projects">
+        <i class="fas fa-music"></i>
+        <span class="ai-text">My Newest Projects</span>
+    </button>
+
     <!-- AI Chatbot Modal Overlay -->
     <div id="ai-chatbot-overlay" class="ai-chatbot-overlay">
         <div id="ai-chatbot-modal" class="ai-chatbot-modal">
@@ -440,8 +446,107 @@
         </div>
     </div>
 
+    <!-- SATB Projects Modal Overlay -->
+    <div id="satb-projects-overlay" class="ai-chatbot-overlay">
+        <div id="satb-projects-modal" class="ai-chatbot-modal" style="max-width: 800px;">
+            <div class="ai-chatbot-header">
+                <h2>🎼 My Latest Projects</h2>
+                <button id="satb-projects-close" class="ai-chatbot-close">×</button>
+            </div>
+            <div style="padding: 30px; background: white; overflow-y: auto; max-height: 500px;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3 style="color: #2c3e50; font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 20px;">
+                        SATB Progression Analyzer
+                    </h3>
+                    <p style="color: #555; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px;">
+                        An advanced music theory tool that analyzes bass lines and generates sophisticated chord progressions with SATB harmonization. This innovative platform combines classical music theory with modern AI technology.
+                    </p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+                    <div style="background: #f8f9fa; border-radius: 15px; padding: 20px; border-left: 4px solid #c9a96e;">
+                        <h4 style="color: #c9a96e; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">
+                            🎵 Chord Progression Analysis
+                        </h4>
+                        <p style="color: #666; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5;">
+                            Input any bass line and get intelligent chord progression suggestions with scoring based on classical harmony principles.
+                        </p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; border-radius: 15px; padding: 20px; border-left: 4px solid #c9a96e;">
+                        <h4 style="color: #c9a96e; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">
+                            🎼 SATB Harmonization
+                        </h4>
+                        <p style="color: #666; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5;">
+                            Generate traditional four-part harmony following classical voice leading rules with detailed analysis and scoring.
+                        </p>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; border-radius: 15px; padding: 20px; border-left: 4px solid #c9a96e;">
+                        <h4 style="color: #c9a96e; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">
+                            🤖 AI Music Generation
+                        </h4>
+                        <p style="color: #666; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; line-height: 1.5;">
+                            Create complete instrumental pieces using Meta's MusicGen AI, inspired by your chord progressions.
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://satbwritingwebsite.netlify.app/" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #c9a96e, #b89862); color: white; text-decoration: none; padding: 15px 30px; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(201, 169, 110, 0.3);">
+                        🚀 Try SATB Progression Analyzer
+                    </a>
+                </div>
+                
+                <div style="background: rgba(46, 204, 113, 0.1); border-radius: 10px; padding: 15px; border: 1px solid rgba(46, 204, 113, 0.3); margin-top: 20px;">
+                    <p style="color: #2ecc71; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 500; margin: 0; text-align: center;">
+                        ✨ <strong>Live & Updated:</strong> This tool is actively being developed and enhanced with new features!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Chatbot Scripts -->
     <script src="chatbot-v3.js" defer></script>
     <script src="chatbot-shared.js" defer></script>
+    
+    <script>
+        // SATB Projects Modal Functionality
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const satbProjectsBtn = document.getElementById('satb-projects-btn');
+            const satbProjectsOverlay = document.getElementById('satb-projects-overlay');
+            const satbProjectsClose = document.getElementById('satb-projects-close');
+
+            if (satbProjectsBtn && satbProjectsOverlay && satbProjectsClose) {
+                function openSatbProjects() {
+                    satbProjectsOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeSatbProjects() {
+                    satbProjectsOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+
+                satbProjectsBtn.addEventListener('click', openSatbProjects);
+                satbProjectsClose.addEventListener('click', closeSatbProjects);
+
+                // Close modal when clicking outside
+                satbProjectsOverlay.addEventListener('click', (e) => {
+                    if (e.target === satbProjectsOverlay) {
+                        closeSatbProjects();
+                    }
+                });
+
+                // Close modal with Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && satbProjectsOverlay.classList.contains('active')) {
+                        closeSatbProjects();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
