@@ -61,9 +61,9 @@
 .ai-chatbot-modal {
     background: #fdfaf5;
     border-radius: 20px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
+    width: 95%;
+    max-width: 800px; /* 从700px大幅增加到800px */
+    max-height: 85vh; /* 从80vh增加到85vh */
     display: flex;
     flex-direction: column;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -80,7 +80,7 @@
 .ai-chatbot-header {
     background: linear-gradient(135deg, #c9a96e, #b89862);
     color: white;
-    padding: 20px;
+    padding: 25px 30px; /* 从20px增加到25px 30px */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,7 +91,7 @@
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
-    font-size: 1.3rem;
+    font-size: 1.5rem; /* 从1.3rem增加到1.5rem */
 }
 
 .ai-chatbot-close {
@@ -116,21 +116,21 @@
 
 /* Quick Suggestions */
 .ai-quick-suggestions {
-    padding: 15px 20px;
+    padding: 20px 30px; /* 从15px 20px增加到20px 30px */
     background: #f9f5ef;
     border-bottom: 1px solid #e6d8c1;
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 12px; /* 从8px增加到12px */
 }
 
 .suggestion-btn {
     background: #c9a96e;
     color: white;
     border: none;
-    border-radius: 15px;
-    padding: 6px 12px;
-    font-size: 0.8rem;
+    border-radius: 18px; /* 从15px增加到18px */
+    padding: 8px 16px; /* 从6px 12px增加到8px 16px */
+    font-size: 0.9rem; /* 从0.8rem增加到0.9rem */
     cursor: pointer;
     transition: all 0.3s;
     font-family: 'Montserrat', sans-serif;
@@ -146,32 +146,36 @@
 /* Chat History */
 .ai-chat-history {
     flex-grow: 1;
-    padding: 20px;
+    padding: 25px 30px; /* 从20px增加到25px 30px */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px; /* 从12px增加到16px */
     background: white;
-    max-height: 350px;
+    max-height: 400px; /* 从350px增加到400px */
 }
 
 /* Chat Input */
 .ai-chat-input-container {
-    padding: 20px;
+    padding: 25px 30px; /* 从20px增加到25px 30px */
     background: #f9f5ef;
     border-top: 1px solid #e6d8c1;
     display: flex;
-    gap: 10px;
+    gap: 10px; /* 从12px减少到10px，为输入框留出更多空间 */
+    align-items: center; /* 确保垂直居中对齐 */
 }
 
 .ai-chat-input-container input {
     flex-grow: 1;
+    min-width: 0; /* 允许flex项目收缩 */
     border: 1px solid #e6d8c1;
     border-radius: 25px;
-    padding: 12px 20px;
-    font-size: 0.95rem;
+    padding: 14px 20px; /* 从24px减少到20px，为文字留出更多空间 */
+    font-size: 1rem; /* 从0.95rem增加到1rem */
     font-family: 'Montserrat', sans-serif;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* 确保输入框占满可用空间 */
+    box-sizing: border-box; /* 确保padding不会增加总宽度 */
 }
 
 .ai-chat-input-container input:focus {
@@ -185,11 +189,14 @@
     color: white;
     border: none;
     border-radius: 25px;
-    padding: 12px 20px;
+    padding: 14px 18px; /* 从20px减少到18px */
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    white-space: nowrap; /* 防止按钮文字换行 */
+    flex-shrink: 0; /* 防止按钮被压缩 */
+    min-width: 60px; /* 设置最小宽度 */
 }
 
 .ai-chat-input-container button:hover {
@@ -203,8 +210,8 @@
     color: white !important;
     border: none;
     border-radius: 50% !important;
-    width: 45px;
-    height: 45px;
+    width: 48px; /* 从50px减少到48px */
+    height: 48px; /* 从50px减少到48px */
     padding: 0 !important;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
@@ -213,6 +220,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0; /* 防止语音按钮被压缩 */
 }
 
 .voice-btn:hover {
@@ -241,12 +249,12 @@
 
 /* Chat Messages */
 .chat-message {
-    padding: 12px 16px;
+    padding: 14px 20px; /* 从12px 16px增加到14px 20px */
     border-radius: 18px;
     max-width: 80%;
     word-wrap: break-word;
-    line-height: 1.5;
-    font-size: 0.95rem;
+    line-height: 1.6; /* 从1.5增加到1.6 */
+    font-size: 1rem; /* 从0.95rem增加到1rem */
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -265,71 +273,37 @@
     border-radius: 18px 18px 18px 4px;
 }
 
-/* Responsive Design */
+/* AI Chatbot Button Responsive Design */
 @media (max-width: 768px) {
     .ai-chatbot-button {
-        top: 90px; /* Position below navigation bar on mobile with more clearance */
+        top: 90px;
         right: 15px;
         padding: 10px 16px;
         font-size: 0.8rem;
     }
-
-    .ai-chatbot-modal {
-        width: 95%;
-        max-height: 85vh;
-    }
-
-    .ai-chatbot-header {
-        padding: 15px;
-    }
-
-    .ai-chatbot-header h2 {
-        font-size: 1.1rem;
-    }
-
-    .ai-quick-suggestions {
-        padding: 10px 15px;
-    }
-
-    .suggestion-btn {
-        font-size: 0.7rem;
-        padding: 5px 10px;
-    }
-
-    .ai-chat-history {
-        padding: 15px;
-        max-height: 300px;
-    }
-
-    .ai-chat-input-container {
-        padding: 15px;
-    }
 }
 
-/* Tablet and iPad specific adjustments */
 @media (min-width: 769px) and (max-width: 1024px) {
     .ai-chatbot-button {
-        top: 105px; /* Position below navigation bar on tablets/iPads with more clearance */
+        top: 105px;
         right: 20px;
         padding: 12px 20px;
         font-size: 0.9rem;
     }
 }
 
-/* Large tablets and small desktops */
 @media (min-width: 1025px) and (max-width: 1366px) {
     .ai-chatbot-button {
-        top: 110px; /* Position below navigation bar on large tablets with more clearance */
+        top: 110px;
         right: 25px;
         padding: 12px 22px;
         font-size: 1rem;
     }
 }
 
-/* iPad Pro and large tablets */
 @media (min-width: 1367px) and (max-width: 1440px) {
     .ai-chatbot-button {
-        top: 115px; /* Position below navigation bar on iPad Pro with more clearance */
+        top: 115px;
         right: 30px;
         padding: 12px 24px;
         font-size: 1rem;
@@ -342,7 +316,7 @@
     }
 
     .ai-chatbot-button {
-        top: 90px; /* Maintain position below navigation bar with more clearance */
+        top: 90px;
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -354,3 +328,410 @@
         font-size: 1.2rem;
     }
 } 
+
+/* Responsive Design - Comprehensive coverage for all devices */
+
+/* Large Desktop (1920px and above) */
+@media (min-width: 1920px) {
+    .ai-chatbot-modal {
+        max-width: 900px;
+        max-height: 80vh;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 16px 28px;
+        font-size: 1.1rem;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 16px 24px;
+        font-size: 1.1rem;
+    }
+    
+    .voice-btn {
+        width: 54px;
+        height: 54px;
+    }
+}
+
+/* Standard Desktop (1367px - 1919px) */
+@media (min-width: 1367px) and (max-width: 1919px) {
+    .ai-chatbot-modal {
+        max-width: 800px;
+    }
+}
+
+/* Small Desktop and Large Laptop (1025px - 1366px) */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    .ai-chatbot-modal {
+        max-width: 750px;
+    }
+    
+    .ai-chat-input-container {
+        gap: 12px;
+    }
+}
+
+/* Standard Laptop (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .ai-chatbot-modal {
+        max-width: 700px;
+    }
+    
+    .ai-chat-input-container {
+        gap: 10px;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 13px 22px;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 13px 20px;
+    }
+}
+
+/* iPad Pro (1024px) */
+@media (min-width: 1024px) and (max-width: 1024px) and (orientation: landscape) {
+    .ai-chatbot-modal {
+        max-width: 750px;
+        max-height: 80vh;
+    }
+}
+
+/* iPad Air and Standard iPad (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .ai-chatbot-modal {
+        max-width: 650px;
+        max-height: 80vh;
+    }
+    
+    .ai-chatbot-header {
+        padding: 22px 28px;
+    }
+    
+    .ai-chatbot-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    .ai-quick-suggestions {
+        padding: 18px 25px;
+        gap: 10px;
+    }
+    
+    .suggestion-btn {
+        padding: 7px 14px;
+        font-size: 0.85rem;
+    }
+    
+    .ai-chat-history {
+        padding: 22px 28px;
+        max-height: 350px;
+    }
+    
+    .ai-chat-input-container {
+        padding: 22px 28px;
+        gap: 10px;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 13px 22px;
+        font-size: 0.98rem;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 13px 20px;
+        font-size: 0.98rem;
+        min-width: 65px;
+    }
+    
+    .voice-btn {
+        width: 46px;
+        height: 46px;
+    }
+}
+
+/* iPad Mini and Small Tablets (768px - 820px) */
+@media (min-width: 768px) and (max-width: 820px) {
+    .ai-chatbot-modal {
+        max-width: 600px;
+    }
+    
+    .ai-chat-input-container {
+        gap: 8px;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 12px 20px;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 12px 18px;
+        min-width: 60px;
+    }
+}
+
+/* Large Mobile and Small Tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .ai-chatbot-modal {
+        width: 95%;
+        max-width: 500px;
+        max-height: 85vh;
+    }
+    
+    .ai-chatbot-header {
+        padding: 18px 22px;
+    }
+    
+    .ai-chatbot-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .ai-quick-suggestions {
+        padding: 15px 20px;
+        gap: 8px;
+    }
+    
+    .suggestion-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .ai-chat-history {
+        padding: 18px 22px;
+        max-height: 320px;
+    }
+    
+    .ai-chat-input-container {
+        padding: 18px 22px;
+        gap: 8px;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 12px 18px;
+        font-size: 0.95rem;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        min-width: 55px;
+    }
+    
+    .voice-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Standard Mobile (375px - 480px) */
+@media (min-width: 375px) and (max-width: 480px) {
+    .ai-chatbot-modal {
+        width: 95%;
+        max-width: 450px;
+        max-height: 85vh;
+    }
+    
+    .ai-chatbot-header {
+        padding: 16px 20px;
+    }
+    
+    .ai-chatbot-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .ai-quick-suggestions {
+        padding: 12px 18px;
+        gap: 6px;
+    }
+    
+    .suggestion-btn {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+    }
+    
+    .ai-chat-history {
+        padding: 16px 20px;
+        max-height: 300px;
+    }
+    
+    .ai-chat-input-container {
+        padding: 16px 20px;
+        gap: 6px;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+        min-width: 50px;
+    }
+    
+    .voice-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Small Mobile (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+    .ai-chatbot-modal {
+        width: 98%;
+        max-width: 400px;
+        max-height: 90vh;
+    }
+    
+    .ai-chatbot-header {
+        padding: 14px 18px;
+    }
+    
+    .ai-chatbot-header h2 {
+        font-size: 1rem;
+    }
+    
+    .ai-quick-suggestions {
+        padding: 10px 15px;
+        gap: 5px;
+    }
+    
+    .suggestion-btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+    
+    .ai-chat-history {
+        padding: 14px 18px;
+        max-height: 280px;
+    }
+    
+    .ai-chat-input-container {
+        padding: 14px 18px;
+        gap: 5px;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 9px 14px;
+        font-size: 0.85rem;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 9px 12px;
+        font-size: 0.8rem;
+        min-width: 45px;
+    }
+    
+    .voice-btn {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* Extra Small Mobile (below 320px) */
+@media (max-width: 319px) {
+    .ai-chatbot-modal {
+        width: 98%;
+        max-width: 350px;
+        max-height: 90vh;
+    }
+    
+    .ai-chatbot-header {
+        padding: 12px 16px;
+    }
+    
+    .ai-chatbot-header h2 {
+        font-size: 0.95rem;
+    }
+    
+    .ai-quick-suggestions {
+        padding: 8px 12px;
+        gap: 4px;
+    }
+    
+    .suggestion-btn {
+        padding: 3px 6px;
+        font-size: 0.65rem;
+    }
+    
+    .ai-chat-history {
+        padding: 12px 16px;
+        max-height: 260px;
+    }
+    
+    .ai-chat-input-container {
+        padding: 12px 16px;
+        gap: 4px;
+    }
+    
+    .ai-chat-input-container input {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .ai-chat-input-container button {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+        min-width: 40px;
+    }
+    
+    .voice-btn {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .ai-chatbot-modal {
+        max-height: 75vh;
+    }
+    
+    .ai-chat-history {
+        max-height: 200px;
+    }
+    
+    .ai-chatbot-header {
+        padding: 12px 20px;
+    }
+    
+    .ai-chat-input-container {
+        padding: 12px 20px;
+    }
+}
+
+/* Portrait orientation adjustments for tablets */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .ai-chatbot-modal {
+        max-height: 75vh;
+    }
+    
+    .ai-chat-history {
+        max-height: 300px;
+    }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .ai-chatbot-modal {
+        border-radius: 22px;
+    }
+    
+    .suggestion-btn {
+        border-radius: 20px;
+    }
+    
+    .ai-chat-input-container input {
+        border-radius: 28px;
+    }
+    
+    .ai-chat-input-container button {
+        border-radius: 28px;
+    }
+    
+    .voice-btn {
+        border-radius: 50% !important;
+    }
+}
