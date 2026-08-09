@@ -749,9 +749,12 @@ html {
     min-width: max-content;
     margin: 0 auto;
 }
+.piano-keys > div {
+    flex: 0 0 160px;
+}
 .white-key {
     width: 160px;
-    flex: 0 0 160px;
+    flex: 0 0 auto;
     height: 90px;
     background: linear-gradient(to bottom, #fff 80%, #ececec 100%);
     border: 1.5px solid #bbb;
@@ -802,7 +805,8 @@ html {
 }
 @media (max-width: 600px) {
     .piano-navbar, .piano-keys { height: 50px; }
-    .white-key { width: 100px; flex-basis: 100px; height: 50px; font-size: 0.8rem; }
+    .piano-keys > div { flex-basis: 100px; }
+    .white-key { width: 100px; height: 50px; font-size: 0.8rem; }
     .black-key { width: 18px; height: 28px; margin-left: 0; }
 }
 .piano-gradient-left, .piano-gradient-right {
