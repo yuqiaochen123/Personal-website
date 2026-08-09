@@ -723,7 +723,7 @@ html {
 /* Piano Keyboard Navigation */
 .piano-navbar {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-end;
     position: fixed;
     top: 0;
@@ -732,15 +732,26 @@ html {
     height: 90px;
     background: transparent;
     z-index: 1000;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.piano-navbar::-webkit-scrollbar {
+    display: none;
 }
 .piano-keys {
     display: flex;
     position: relative;
     height: 90px;
     gap: 0;
+    width: max-content;
+    min-width: max-content;
+    margin: 0 auto;
 }
 .white-key {
     width: 160px;
+    flex: 0 0 160px;
     height: 90px;
     background: linear-gradient(to bottom, #fff 80%, #ececec 100%);
     border: 1.5px solid #bbb;
@@ -791,7 +802,7 @@ html {
 }
 @media (max-width: 600px) {
     .piano-navbar, .piano-keys { height: 50px; }
-    .white-key { width: 100px; height: 50px; font-size: 0.8rem; }
+    .white-key { width: 100px; flex-basis: 100px; height: 50px; font-size: 0.8rem; }
     .black-key { width: 18px; height: 28px; margin-left: 0; }
 }
 .piano-gradient-left, .piano-gradient-right {
@@ -906,4 +917,3 @@ html {
     margin-bottom: 0.5rem;
     padding-left: 1.5rem;
 }
-
