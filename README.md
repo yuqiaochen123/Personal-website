@@ -1,29 +1,75 @@
-# YUQIAO CHEN - Personal Portfolio
+# Yuqiao Chen — Personal Portfolio
 
-A professional portfolio website showcasing my journey as a pianist, scholar, and artist.
+A personal portfolio presenting Yuqiao Chen's work as a pianist, scholar, and artist.
 
-## About Me
-Award-winning pianist and academic scholar with international performance experience across China, India, Nepal, and Thailand. Apple Artist with 8M+ streams worldwide.
+## Live website
 
-## Website Features
-- **Global Experience**: My musical journey across different countries
-- **Accolades**: Extensive competition achievements and awards
-- **Professional Work**: Collaborations with Karma Sound Studio and international performances
-- **Contact**: Connect with me through social media
+[https://yuqiaochen.uk](https://yuqiaochen.uk)
 
-## Achievements Highlights
-- Winner of Bangkok Chopin Piano Competition 2024
-- 10 A*/9s in IGCSEs (highest at Regents)
-- IB predicted score: 41/42
-- Apple Artist status with millions of streams
-- Multiple international competition victories
+The static site is published from GitHub. A push should be intentional because changes to the publishing branch can update the live website.
 
-## Live Website
-🌐 **Visit my portfolio**: [https://yuqiaochen123.github.io/Personal-website/](https://yuqiaochen123.github.io/Personal-website/)
+## Architecture
+
+- The top-level HTML, CSS, JavaScript, image, video, and PDF files form the static website.
+- `chatbot-v3.js` sends production chatbot requests to the Cloudflare Worker.
+- `chatbot-worker/src/index.js` is the production 2brain API proxy.
+- `server.js` serves the website locally and provides a development fallback at `/api/2brain`.
+- `script.js` handles the EmailJS contact form.
+- `screenshots website/` contains historical reference material and is not production source.
+
+## Local setup
+
+Node.js 18 or newer is required.
+
+```bash
+npm install
+cp .env.example .env
+```
+
+Set `TWOBRAIN_API_KEY` in `.env`, then start the local server:
+
+```bash
+npm start
+```
+
+Open [http://localhost:3000](http://localhost:3000). Stop the server with `Control+C`.
+
+Never commit `.env`. It is intentionally ignored by Git.
+
+## Checks
+
+```bash
+npm test
+npm run check
+```
+
+`npm test` runs the Node test suite. `npm run check` verifies local HTML references and JavaScript syntax. Run both before committing or publishing a change.
+
+## Cloudflare Worker
+
+The browser calls `https://chatbot-api.yuqiaochen.workers.dev`. The Worker accepts browser requests from the production domain and local development origins only.
+
+Configure and deploy it from the Worker directory:
+
+```bash
+cd chatbot-worker
+npx wrangler secret put TWOBRAIN_API_KEY
+npx wrangler deploy
+```
+
+The 2brain key was previously committed to this repository. Removing `.env` from the current tree does not remove it from Git history. Rotate that key with the provider, update the local `.env`, and replace the Cloudflare Worker secret.
+
+## Publishing
+
+Work and test locally first. Commit useful checkpoints locally. Push only when the commits are ready to be backed up and published:
+
+```bash
+git push origin main
+```
+
+The custom domain is configured through `CNAME` as `yuqiaochen.uk`.
 
 ## Contact
-- **Instagram**: [@sequoia_petrichor](https://instagram.com/sequoia_petrichor)
-- **Email**: Available through website contact form
 
----
-*Turning life's constant change into music that speaks.*
+- Instagram: [@sequoia_petrichor](https://instagram.com/sequoia_petrichor)
+- Email: available through the website contact form
