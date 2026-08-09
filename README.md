@@ -15,6 +15,7 @@ The static site is published from GitHub. A push should be intentional because c
 - `chatbot-worker/src/index.js` is the production 2brain API proxy.
 - `server.js` serves the website locally and provides a development fallback at `/api/2brain`.
 - `script.js` handles the EmailJS contact form.
+- `profile-data.js` is the canonical source for current biographical facts used by the site and chatbot.
 - `screenshots website/` contains historical reference material and is not production source.
 
 ## Local setup
@@ -44,6 +45,10 @@ npm run check
 ```
 
 `npm test` runs the Node test suite. `npm run check` verifies local HTML references and JavaScript syntax. Run both before committing or publishing a change.
+
+## Updating profile facts
+
+Update confirmed facts in `profile-data.js` first, then reflect the same wording on the relevant public page. The profile-content test rejects discontinued SATB analyzer references and stale predicted IB results. Upcoming engagements should be labelled clearly as upcoming until they have taken place.
 
 ## Cloudflare Worker
 

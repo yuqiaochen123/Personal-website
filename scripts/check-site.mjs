@@ -9,6 +9,7 @@ const htmlFiles = (await readdir(rootDir))
   .filter((file) => file.endsWith('.html'))
   .sort();
 const JavaScriptFiles = [
+  'profile-data.js',
   'server.js',
   'script.js',
   'chatbot-shared.js',

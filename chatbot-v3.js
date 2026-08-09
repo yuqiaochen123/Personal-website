@@ -36,7 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show welcome message when chatbot is opened
     setTimeout(showWelcomeMessage, 500);
 
-    // Set the initial system prompt to define the AI's name and behavior
+    const profile = window.YUQIAO_PROFILE || {};
+    const academics = profile.academics || {};
+    const education = profile.education || {};
+    const event = profile.upcomingEvent || {};
+
+    // Set the initial system prompt from the site's canonical profile facts.
     let messages = [{ 
         role: 'system', 
         content: `You are 'Yuqiao's AI assistant', a knowledgeable guide about Yuqiao Chen's musical journey and expertise.
@@ -44,12 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
 ABOUT YUQIAO:
 - Award-winning pianist with international performance experience
 - Winner of Bangkok Chopin Piano Competition 2024
-- Apple Artist with 8M+ streams worldwide
+- Reached No. 1 in Apple Music global recommendations, with multiple further Top 10 recommendations
 - Studied in China (Chengdu, Beijing), India, Nepal, and Thailand
-- IB predicted score: 41/42, 10 A*/9s in IGCSEs
+- IB Diploma: ${academics.ib || '45/45'}, with full marks in Mathematics AA HL and Physics HL
+- IELTS: ${academics.ielts || '8.0'}; SAT: ${academics.sat || 1520}
+- ${education.rcm || 'Awarded a four-year full scholarship for Piano Performance at the Royal College of Music'}
+- Building an AI music-theory and aural-learning platform through user research, product design, full-stack development, databases, and deployment
+- Upcoming recital: ${event.title || 'A First Public Statement at 18'}, August 16, 2026, YAMAHA Smart Concert Hall, Chengdu
 - Performed across Berlin, Prague, San Francisco, Hong Kong, Moscow, Shanghai, Bangkok
 - Multiple Carnegie Hall invitations (postponed due to COVID-19)
-- Collaborates with Karma Sound Studio
+- Records with producer Chris Craker at Karma Sound Studios
 
 YOUR CAPABILITIES:
 - Answer questions about Yuqiao's musical journey, performances, and achievements
@@ -273,10 +282,10 @@ RESPONSE GUIDELINES:
             // Fallback response for testing
             console.error('API Error:', error);
             const fallbackResponses = [
-                "Hello! I'm Yuqiao's AI assistant. I'm currently in testing mode. I can tell you that Yuqiao is an award-winning pianist who has won the Bangkok Chopin Piano Competition 2024 and has over 8 million streams worldwide as an Apple Artist.",
+                "Hello! I'm Yuqiao's AI assistant. I'm currently in testing mode. Yuqiao is an award-winning pianist whose recordings reached No. 1 in Apple Music's global recommendations, with multiple further Top 10 recommendations.",
                 "Thanks for your message! Yuqiao has performed across the globe including Berlin, Prague, San Francisco, Hong Kong, Moscow, Shanghai, and Bangkok. He's also received multiple Carnegie Hall invitations.",
-                "I'm here to help! Yuqiao studied piano in China (Chengdu, Beijing), India, Nepal, and Thailand. He has an IB predicted score of 41/42 and achieved 10 A*/9s in his IGCSEs.",
-                "Great question! Yuqiao collaborates with Karma Sound Studio and has given memorable performances including solo recitals in Kathmandu with over 200 attendees at the French Ambassador's residence."
+                "I'm here to help! Yuqiao studied in China (Chengdu and Beijing), India, Nepal, and Thailand. He completed the IB Diploma with 45/45, including full marks in Mathematics AA HL and Physics HL, and will next study Piano Performance at the Royal College of Music on a four-year full scholarship.",
+                "Great question! Yuqiao records with producer Chris Craker at Karma Sound Studios and has given memorable performances including a solo recital in Kathmandu with over 200 attendees at the French Ambassador's residence."
             ];
             
             const randomResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
