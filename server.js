@@ -82,6 +82,15 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.use((error, req, res, next) => {
+  if (error.message === 'Origin not allowed by CORS') {
+    res.status(403).json({ error: 'Forbidden origin' });
+    return;
+  }
+
+  next(error);
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
