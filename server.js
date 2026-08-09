@@ -2,11 +2,19 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const { isAllowedOrigin } = require('./origin-policy');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const app = express();
 
 app.use(cors({
-    origin: '*',
+    origin(origin, callback) {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error('Origin not allowed by CORS'));
+    },
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -78,4 +86,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
   console.log('API Key loaded:', TWOBRAIN_API_KEY ? 'Yes' : 'No');
-}); 
+});

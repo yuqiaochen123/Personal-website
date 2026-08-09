@@ -1,25 +1,61 @@
+const ALLOWED_ORIGINS = new Set([
+  'https://yuqiaochen.uk',
+  'https://www.yuqiaochen.uk',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+]);
+
+function isAllowedOrigin(origin) {
+  return origin === null || ALLOWED_ORIGINS.has(origin);
+}
+
+export function corsHeadersFor(origin) {
+  const headers = {
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    Vary: 'Origin',
+  };
+
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+  }
+
+  return headers;
+}
+
 export default {
-  async fetch(request, env, ctx) {
-    // Handle CORS preflight requests
-    if (request.method === 'OPTIONS') {
-      return handleOptions(request);
+  async fetch(request, env) {
+    const origin = request.headers.get('Origin');
+
+    if (!isAllowedOrigin(origin)) {
+      return new Response('Forbidden origin', { status: 403 });
     }
 
-    // Ensure it's a POST request
+    const corsHeaders = corsHeadersFor(origin);
+
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+
     if (request.method !== 'POST') {
-      return new Response('Method Not Allowed', { status: 405 });
+      return new Response('Method Not Allowed', {
+        status: 405,
+        headers: { ...corsHeaders, Allow: 'POST, OPTIONS' },
+      });
     }
 
     const { messages } = await request.json();
-  
+
     if (!messages || !Array.isArray(messages)) {
-      return new Response('Invalid messages format', { status: 400 });
+      return new Response('Invalid messages format', {
+        status: 400,
+        headers: corsHeaders,
+      });
     }
-  
-    // Transform messages to have 'user' role
-    const transformedMessages = messages.map(msg => ({
+
+    const transformedMessages = messages.map((message) => ({
       role: 'user',
-      content: msg.content
+      content: message.content,
     }));
 
     try {
@@ -27,7 +63,7 @@ export default {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${env.TWOBRAIN_API_KEY}`
+          Authorization: `Bearer ${env.TWOBRAIN_API_KEY}`,
         },
         body: JSON.stringify({
           model: '2brain-1.5',
@@ -35,8 +71,8 @@ export default {
           max_tokens: 1000,
           temperature: 0.7,
           intent_engine: 0,
-          stream: true
-        })
+          stream: true,
+        }),
       });
 
       if (!response.ok) {
@@ -48,55 +84,20 @@ export default {
         throw new Error('API response is not streamable');
       }
 
-      const corsHeaders = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-      };
-
       return new Response(response.body, {
-        headers: corsHeaders,
-        status: response.status
+        status: response.status,
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+        },
       });
-
     } catch (error) {
       console.error('Worker error:', error);
-      const corsHeaders = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      };
-      return new Response(error.message, { 
+      return new Response(error.message, {
         status: 500,
-        headers: corsHeaders
+        headers: corsHeaders,
       });
     }
   },
 };
-
-function handleOptions(request) {
-  let headers = request.headers;
-  if (
-    headers.get("Origin") !== null &&
-    headers.get("Access-Control-Request-Method") !== null &&
-    headers.get("Access-Control-Request-Headers") !== null
-  ) {
-    // Handle CORS preflight requests.
-    let respHeaders = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    };
-    return new Response(null, { headers: respHeaders });
-  } else {
-    // Handle standard OPTIONS request.
-    return new Response(null, {
-      headers: {
-        Allow: "POST, OPTIONS",
-      },
-    });
-  }
-} 
