@@ -67,3 +67,14 @@ test('public pages present the current chapter and upcoming event', async () => 
   assert.match(media, /UPCOMING · 16 AUG 2026/);
   assert.match(karma, /Apple Music's global recommendations/);
 });
+
+test('chatbot control clears the piano keyboard at desktop and mobile heights', async () => {
+  const css = await readFile(path.join(rootDir, 'chatbot-shared.css'), 'utf8');
+
+  assert.match(css, /--piano-nav-height:\s*90px/);
+  assert.match(css, /--chat-control-gap:\s*24px/);
+  assert.match(css, /top:\s*calc\(var\(--piano-nav-height\)\s*\+\s*var\(--chat-control-gap\)\)/);
+  assert.match(css, /right:\s*calc\(20px\s*\+\s*env\(safe-area-inset-right,\s*0px\)\)/);
+  assert.match(css, /@media\s*\(max-width:\s*600px\)[\s\S]*--piano-nav-height:\s*50px[\s\S]*--chat-control-gap:\s*20px/);
+  assert.match(css, /@media\s*\(max-width:\s*480px\)[\s\S]*\.ai-text\s*\{[\s\S]*display:\s*none/);
+});

@@ -1,8 +1,10 @@
 /* AI Chatbot Button - Shared across all pages */
 .ai-chatbot-button {
+    --piano-nav-height: 90px;
+    --chat-control-gap: 24px;
     position: fixed;
-    top: 100px; /* Position below navigation bar with more clearance */
-    right: 20px;
+    top: calc(var(--piano-nav-height) + var(--chat-control-gap));
+    right: calc(20px + env(safe-area-inset-right, 0px));
     z-index: 1000;
     background-color: #c9a96e;
     color: white;
@@ -272,42 +274,38 @@
 /* AI Chatbot Button Responsive Design */
 @media (max-width: 768px) {
     .ai-chatbot-button {
-        top: 90px;
-        right: 15px;
+        right: calc(15px + env(safe-area-inset-right, 0px));
         padding: 10px 16px;
         font-size: 0.8rem;
     }
-    
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .ai-chatbot-button {
-        top: 105px;
-        right: 20px;
         padding: 12px 20px;
         font-size: 0.9rem;
     }
-    
 }
 
 @media (min-width: 1025px) and (max-width: 1366px) {
     .ai-chatbot-button {
-        top: 110px;
-        right: 25px;
         padding: 12px 22px;
         font-size: 1rem;
     }
-    
 }
 
 @media (min-width: 1367px) and (max-width: 1440px) {
     .ai-chatbot-button {
-        top: 115px;
-        right: 30px;
         padding: 12px 24px;
         font-size: 1rem;
     }
-    
+}
+
+@media (max-width: 600px) {
+    .ai-chatbot-button {
+        --piano-nav-height: 50px;
+        --chat-control-gap: 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -316,7 +314,6 @@
     }
 
     .ai-chatbot-button {
-        top: 90px;
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -327,7 +324,6 @@
     .ai-chatbot-button i {
         font-size: 1.2rem;
     }
-    
 }
 
 /* Responsive Design - Comprehensive coverage for all devices */
