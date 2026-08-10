@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
+import vm from 'node:vm';
 
 const require = createRequire(import.meta.url);
 const rootDir = path.resolve(import.meta.dirname, '..');
@@ -77,4 +78,55 @@ test('chatbot control clears the piano keyboard at desktop and mobile heights', 
   assert.match(css, /right:\s*calc\(20px\s*\+\s*env\(safe-area-inset-right,\s*0px\)\)/);
   assert.match(css, /@media\s*\(max-width:\s*600px\)[\s\S]*--piano-nav-height:\s*50px[\s\S]*--chat-control-gap:\s*20px/);
   assert.match(css, /@media\s*\(max-width:\s*480px\)[\s\S]*\.ai-text\s*\{[\s\S]*display:\s*none/);
+});
+
+test('concert dialog opens accessibly and Escape closes it with focus restored', async () => {
+  const source = await readFile(path.join(rootDir, 'concert-overlay.js'), 'utf8').catch(() => '');
+  const listeners = new Map();
+  const documentListeners = new Map();
+  const makeElement = () => ({
+    hidden: true,
+    attributes: new Map(),
+    classList: {
+      values: new Set(),
+      add(value) { this.values.add(value); },
+      remove(value) { this.values.delete(value); },
+      contains(value) { return this.values.has(value); },
+    },
+    addEventListener(type, handler) { listeners.set(this, { type, handler }); },
+    setAttribute(name, value) { this.attributes.set(name, value); },
+    focus() { this.focused = true; },
+  });
+  const trigger = makeElement();
+  const overlay = makeElement();
+  const closeButton = makeElement();
+  const backdrop = makeElement();
+  const body = makeElement();
+  const context = {
+    window: {},
+    document: {
+      activeElement: trigger,
+      addEventListener(type, handler) { documentListeners.set(type, handler); },
+      getElementById() { return null; },
+      querySelector() { return null; },
+    },
+  };
+
+  vm.runInNewContext(source, context);
+  assert.equal(typeof context.window.createConcertOverlayController, 'function');
+
+  context.window.createConcertOverlayController({ trigger, overlay, closeButton, backdrop, body });
+  listeners.get(trigger).handler({ preventDefault() {} });
+
+  assert.equal(overlay.hidden, false);
+  assert.equal(overlay.attributes.get('aria-hidden'), 'false');
+  assert.equal(body.classList.contains('concert-overlay-open'), true);
+  assert.equal(closeButton.focused, true);
+
+  documentListeners.get('keydown')({ key: 'Escape' });
+
+  assert.equal(overlay.hidden, true);
+  assert.equal(overlay.attributes.get('aria-hidden'), 'true');
+  assert.equal(body.classList.contains('concert-overlay-open'), false);
+  assert.equal(trigger.focused, true);
 });

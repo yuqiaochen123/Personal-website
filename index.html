@@ -209,6 +209,163 @@
             text-transform: uppercase;
         }
 
+        .concert-trigger {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.15rem auto 0;
+            padding: 0.8rem 1.15rem;
+            border: 1px solid rgba(230, 200, 142, 0.78);
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.36);
+            color: #f4e6c7;
+            font: 700 0.78rem 'Montserrat', sans-serif;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+        }
+
+        .concert-trigger::before {
+            content: '';
+            width: 0.48rem;
+            height: 0.48rem;
+            border-radius: 50%;
+            background: #e6c88e;
+            box-shadow: 0 0 0 4px rgba(230, 200, 142, 0.12);
+        }
+
+        .concert-trigger:hover {
+            background: rgba(201, 169, 110, 0.18);
+            border-color: #e6c88e;
+            transform: translateY(-2px);
+        }
+
+        .concert-trigger:focus-visible,
+        .concert-overlay__close:focus-visible,
+        .concert-overlay__backdrop:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 4px;
+        }
+
+        body.concert-overlay-open {
+            overflow: hidden !important;
+        }
+
+        .concert-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 4000;
+            display: grid;
+            place-items: center;
+            padding: max(1.25rem, env(safe-area-inset-top, 0px)) max(1.25rem, env(safe-area-inset-right, 0px)) max(1.25rem, env(safe-area-inset-bottom, 0px)) max(1.25rem, env(safe-area-inset-left, 0px));
+            animation: concert-overlay-in 180ms ease-out both;
+        }
+
+        .concert-overlay[hidden] {
+            display: none;
+        }
+
+        .concert-overlay__backdrop {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            border: 0;
+            background: rgba(0, 0, 0, 0.72);
+            cursor: zoom-out;
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+        }
+
+        .concert-overlay__figure {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            place-items: center;
+            width: min(92vw, 46rem);
+            height: min(90dvh, 66rem);
+            min-width: 0;
+            min-height: 0;
+            margin: 0;
+            pointer-events: none;
+        }
+
+        .concert-overlay__image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-width: 0;
+            min-height: 0;
+            object-fit: contain;
+            box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.52);
+        }
+
+        .concert-overlay__close {
+            position: absolute;
+            z-index: 2;
+            top: max(0.75rem, env(safe-area-inset-top, 0px));
+            right: max(0.75rem, env(safe-area-inset-right, 0px));
+            display: grid;
+            place-items: center;
+            width: 3rem;
+            height: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.62);
+            color: #fff;
+            font: 300 2rem/1 Arial, sans-serif;
+            cursor: pointer;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @keyframes concert-overlay-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
+            .concert-trigger {
+                padding: 0.72rem 0.95rem;
+                font-size: 0.7rem;
+            }
+
+            .concert-overlay {
+                padding: max(0.65rem, env(safe-area-inset-top, 0px)) max(0.65rem, env(safe-area-inset-right, 0px)) max(0.65rem, env(safe-area-inset-bottom, 0px)) max(0.65rem, env(safe-area-inset-left, 0px));
+            }
+
+            .concert-overlay__figure {
+                width: 96vw;
+                height: 94dvh;
+            }
+
+            .concert-overlay__close {
+                width: 2.75rem;
+                height: 2.75rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .concert-trigger,
+            .concert-overlay {
+                animation: none;
+                transition: none;
+            }
+        }
+
         .profile-overview {
             background: #0b0b0b;
             color: #f8f4ea;
@@ -611,6 +768,7 @@
                 <p class="hero-positioning">Pianist · Scholar · AI Builder · Global Citizen</p>
                 <p class="hero-subtitle">Performance, ideas, and a life shaped across cultures.</p>
                 <a href="global-experience.html" class="cta-button">Explore My Journey</a>
+                <button id="concert-overlay-trigger" class="concert-trigger" type="button">16 August · Concert</button>
                 <div class="update-announcement" style="background: none; border: none; color: #c9a96e; border-radius: 0; padding: 0; margin: 3.5rem auto 0 auto; max-width: 420px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.93rem; font-weight: 500; box-shadow: none;">
                     <span style="font-size:0.93rem; font-weight:600; color:#c9a96e;">Update:</span> Site refreshed with new features and fixes. <span style="font-size:0.91rem; color:#c9a96e99;">(Last updated: August 09, 2026)</span>
                 </div>
@@ -655,10 +813,20 @@
 
     </div> <!-- End Main Content Wrapper -->
 
+    <div id="concert-overlay" class="concert-overlay" role="dialog" aria-modal="true" aria-labelledby="concert-overlay-title" aria-hidden="true" hidden>
+        <button class="concert-overlay__backdrop" type="button" aria-label="Close concert announcement"></button>
+        <figure class="concert-overlay__figure">
+            <figcaption id="concert-overlay-title" class="visually-hidden">16 August concert announcement</figcaption>
+            <img class="concert-overlay__image" src="assets/events/yuqiao-chen-16-august-concert.png" alt="Yuqiao Chen concert announcement for 16 August 2026">
+        </figure>
+        <button id="concert-overlay-close" class="concert-overlay__close" type="button" aria-label="Close concert announcement">&times;</button>
+    </div>
+
     <!-- Chatbot Scripts -->
     <script src="profile-data.js"></script>
     <script src="chatbot-v3.js" defer></script>
     <script src="chatbot-shared.js" defer></script>
+    <script src="concert-overlay.js" defer></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
